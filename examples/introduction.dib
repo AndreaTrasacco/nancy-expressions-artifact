@@ -1,0 +1,119 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+This notebook contains examples of code to support the motivations for the development of *Nancy.Expressions*.
+
+#!pwsh
+
+# Compile the Nancy.Expression library
+# Warning: if you modified the source, restart the notebook kernel before re-compiling! Use ctrl+shift+P to find this command in VS Code
+dotnet publish -c Release ../Nancy.Expressions/Nancy.Expressions.sln -f net8.0
+
+#!csharp
+
+// Load library and other dependencies 
+#r "nuget: Unipi.Nancy.Interactive"
+#r "../Nancy.Expressions/Nancy.Expressions/bin/Release/net8.0/Unipi.Nancy.Expressions.dll"
+#r "../Nancy.Expressions/Nancy.Expressions.Interactive/bin/Release/net8.0/Unipi.Nancy.Expressions.Interactive.dll"
+
+// Nancy
+using Unipi.Nancy.Numerics;
+using Unipi.Nancy.MinPlusAlgebra;
+using Unipi.Nancy.NetworkCalculus;
+using Unipi.Nancy.Interactive;
+
+// Nancy.Expressions
+using Unipi.Nancy.Expressions;
+using Unipi.Nancy.Expressions.Visitors;
+
+Unipi.Nancy.Expressions.Interactive.NancyExpressionKernelExtension.Load(Microsoft.DotNet.Interactive.KernelInvocationContext.Current.HandlingKernel.RootKernel);
+
+#!markdown
+
+Example of computations using *Nancy*. 
+The code computes the DNC Expression $(\overline{f} \otimes g) \oslash \overline{f}$. `SubAdditiveClosure()`, `Convolution(..)` and `Deconvolution(..)` are *Nancy* methods which immediately compute intermediate results.
+
+#!csharp
+
+var f = new Curve(
+    baseSequence: new Sequence(new Element[]
+    {
+        new Point(time: 0, value: 0),
+        new Segment(startTime: 0, endTime: 2, rightLimitAtStartTime:0, slope: 1),
+        new Point(2, 2),
+        new Segment(2,  3, 2, 0),
+        new Point(3, 2),
+        new Segment(3, 4, 2, 1)
+    }),
+    pseudoPeriodStart: 2,
+    pseudoPeriodLength: 2,
+    pseudoPeriodHeight: 1
+);
+var g = new Curve(
+    baseSequence: new Sequence(new Element[]
+    {
+        new Point(time: 0, value: 0),
+        new Segment(startTime: 0, endTime: 1, rightLimitAtStartTime:0, slope: 3),
+        new Point(1, 3),
+        new Segment(1,  5, 1, 0),
+        new Point(5, 3),
+        new Segment(5, 6, 5, 3)
+    }),
+    pseudoPeriodStart: 1,
+    pseudoPeriodLength: 5,
+    pseudoPeriodHeight: 3
+);
+var f_sac = f.SubAdditiveClosure();
+var conv = Curve.Convolution(f_sac, g);
+var result = Curve.Deconvolution(conv, f_sac);
+
+#!markdown
+
+Same example as before, but using *Nancy.Expressions*. 
+`SubAdditiveClosure()`, `Convolution(..)` and `Deconvolution(..)`, in this case, are *Nancy.Expressions* methods which construct the expression in $\mathcal{O}(1)$, thus without making any computation.
+The *Nancy.Expressions* `Compute()` method is the one which evaluates the DNC expression, exploiting the previous methods of *Nancy*.
+*Nancy.Expressions*, by capturing entire expressions, is also able to print them, as shown in the output cell related to the following code cell.
+
+#!csharp
+
+var f = Expressions.FromCurve(
+    curve: new Curve(
+        baseSequence: new Sequence(new Element[]
+        {
+            new Point(time: 0, value: 0),
+            new Segment(startTime: 0, endTime: 2, rightLimitAtStartTime:0, slope: 1),
+            new Point(2, 2),
+            new Segment(2,  3, 2, 0),
+            new Point(3, 2),
+            new Segment(3, 4, 2, 1)
+        }),
+        pseudoPeriodStart: 2,
+        pseudoPeriodLength: 2,
+        pseudoPeriodHeight: 1
+    ), 
+    name: "f");
+var g = Expressions.FromCurve(
+    curve: new Curve(
+        baseSequence: new Sequence(new Element[]
+        {
+            new Point(time: 0, value: 0),
+            new Segment(startTime: 0, endTime: 1, rightLimitAtStartTime:0, slope: 3),
+            new Point(1, 3),
+            new Segment(1,  5, 1, 0),
+            new Point(5, 3),
+            new Segment(5, 6, 5, 3)
+        }),
+        pseudoPeriodStart: 1,
+        pseudoPeriodLength: 5,
+        pseudoPeriodHeight: 3
+    ),
+    name: "g");
+var f_sac = f.SubAdditiveClosure();
+var conv = Expressions.Convolution(f_sac, g);
+var deconv = Expressions.Deconvolution(conv, f_sac);
+var result = deconv.Compute();
+
+display(deconv);

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="47cac077-e921-4ba6-8177-b0e9cb245859" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Nancy.Expressions/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Nancy.Expressions/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Nancy.Expressions/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Nancy.Expressions/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/AdditionExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/AnticipateByExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/CompositionExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/ConvolutionExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/CurveBinaryExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/CurveExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/CurveUnaryExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/DeconvolutionExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/DelayByExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/Expression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/ExpressionSettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/ExpressionsUtility/LatexRenderer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/HorizontalDeviationExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/IGenericBinaryExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/IGenericExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/IGenericUnaryExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/LowerPseudoInverseExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/MaxPlusConvolutionExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/MaxPlusDeconvolutionExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/MaximumExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/MinimumExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/NAryExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/Nancy.Expressions.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/NegateExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/RationalBinaryExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/RationalExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/RationalNumberExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/SubAddititveClosureExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/SubtractionExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/SuperAddititveClosureExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/ToLeftContinuousExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/ToLowerNonDecreasingExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/ToNonNegativeExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/ToRightContinuousExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/ToUpperNonDecreasingExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/UpperPseudoInverseExpression.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/Visitors/IExpressionVisitor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/Visitors/InOrderEvaluationVisitor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/Visitors/LatexFormatterVisitor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nancy.Expressions/WithZeroOriginExpression.cs" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="Toolset" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2e2DvMQcYkzjuZGBcckpyrNLGoU" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main"
+  },
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\raffa\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
+      "C:\\Users\\raffa\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
+      "C:\\Users\\raffa\\AppData\\Local\\Symbols\\src"
+    ]
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="47cac077-e921-4ba6-8177-b0e9cb245859" name="Changes" comment="" />
+      <created>1711094010078</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711094010078</updated>
+      <workItem from="1711094011963" duration="9896000" />
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>

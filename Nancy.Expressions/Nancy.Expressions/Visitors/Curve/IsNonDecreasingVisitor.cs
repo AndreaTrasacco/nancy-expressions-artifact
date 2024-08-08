@@ -1,0 +1,144 @@
+﻿using Unipi.Nancy.Expressions.Internals;
+using Unipi.Nancy.MinPlusAlgebra;
+
+namespace Unipi.Nancy.Expressions.Visitors;
+
+public class IsNonDecreasingVisitor : ICurveExpressionVisitor
+{
+    public bool IsNonDecreasing;
+
+    public void Visit(ConcreteCurveExpression expression) => IsNonDecreasing = expression.Value.IsNonDecreasing;
+
+    private void _throughCurveComputation(IGenericExpression<Curve> expression) =>
+        IsNonDecreasing = expression.Compute().IsNonDecreasing;
+
+    public void Visit(NegateExpression expression)
+    { 
+        expression.Expression.Accept(this);
+        if (IsNonDecreasing) IsNonDecreasing = false;
+        else _throughCurveComputation(expression);
+    }
+
+    public void Visit(ToNonNegativeExpression expression) => _throughCurveComputation(expression);
+
+    public void Visit(SubAdditiveClosureExpression expression)
+    {
+        if (((CurveExpression)expression.Expression).IsNonNegative)
+        {
+            expression.Expression.Accept(this);
+            if (IsNonDecreasing) return;
+        }
+        _throughCurveComputation(expression);
+    }
+
+    public void Visit(SuperAdditiveClosureExpression expression) => _throughCurveComputation(expression);
+
+    public void Visit(ToUpperNonDecreasingExpression expression) => IsNonDecreasing = true;
+
+    public void Visit(ToLowerNonDecreasingExpression expression) => IsNonDecreasing = true;
+
+    public void Visit(ToLeftContinuousExpression expression) => _throughCurveComputation(expression);
+
+    public void Visit(ToRightContinuousExpression expression) => _throughCurveComputation(expression);
+
+    public void Visit(WithZeroOriginExpression expression) => _throughCurveComputation(expression);
+
+    public void Visit(LowerPseudoInverseExpression expression)
+    {
+        expression.Expression.Accept(this);
+        if (!IsNonDecreasing) _throughCurveComputation(expression);
+    }
+
+    public void Visit(UpperPseudoInverseExpression expression)
+    {
+        expression.Expression.Accept(this);
+        if (!IsNonDecreasing) _throughCurveComputation(expression);
+    }
+
+    public void Visit(AdditionExpression expression)
+    {
+        foreach (var e in expression.Expressions)
+        {
+            IsNonDecreasing = false;
+            if (((CurveExpression)e).IsNonNegative)
+            {
+                e.Accept(this);
+                if (!IsNonDecreasing)
+                    break;
+            }
+            else break;
+        }
+        if(!IsNonDecreasing) _throughCurveComputation(expression);
+    }
+
+    public void Visit(SubtractionExpression expression) => _throughCurveComputation(expression);
+
+    public void Visit(MinimumExpression expression)
+    {
+        foreach (var e in expression.Expressions)
+        {
+            IsNonDecreasing = false;
+            if (((CurveExpression)e).IsNonNegative)
+            {
+                e.Accept(this);
+                if (!IsNonDecreasing)
+                    break;
+            }
+            else break;
+        }
+        if(!IsNonDecreasing) _throughCurveComputation(expression);
+    }
+
+    public void Visit(MaximumExpression expression) => _throughCurveComputation(expression);
+
+    public void Visit(ConvolutionExpression expression)
+    {
+        foreach (var e in expression.Expressions)
+        {
+            IsNonDecreasing = false;
+            if (((CurveExpression)e).IsNonNegative)
+            {
+                e.Accept(this);
+                if (!IsNonDecreasing)
+                    break;
+            }
+            else break;
+        }
+        if(!IsNonDecreasing) _throughCurveComputation(expression);
+    }
+
+    public void Visit(DeconvolutionExpression expression)
+    {
+        if (((CurveExpression)expression.LeftExpression).IsNonNegative)
+        {
+            expression.LeftExpression.Accept(this);
+            if (IsNonDecreasing)
+            {
+                // expression._isNonNegative = true;
+                // expression._isNonDecreasing = true;
+                return;
+            }
+        }
+
+        _throughCurveComputation(expression);
+    }
+
+    public void Visit(MaxPlusConvolutionExpression expression) => _throughCurveComputation(expression);
+
+    public void Visit(MaxPlusDeconvolutionExpression expression) => _throughCurveComputation(expression);
+
+    public void Visit(CompositionExpression expression) => _throughCurveComputation(expression);
+
+    public void Visit(DelayByExpression expression) => expression.LeftExpression.Accept(this);
+
+    public void Visit(AnticipateByExpression expression) => expression.LeftExpression.Accept(this);
+
+    public void Visit(CurvePlaceholderExpression expression)
+        => throw new InvalidOperationException(GetType() + ": Cannot perform the check on a placeholder expression!");
+
+    public void Visit(ScaleExpression expression)
+    {
+        if (expression.RightExpression.Compute() > 0) expression.LeftExpression.Accept(this);
+        else _throughCurveComputation(expression);
+    }
+}

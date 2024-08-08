@@ -1,0 +1,132 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+This notebook contains examples of code to support the enumeration of the design goals of *Nancy.Expressions*.
+
+#!pwsh
+
+# Compile the Nancy.Expression library
+# Warning: if you modified the source, restart the notebook kernel before re-compiling! Use ctrl+shift+P to find this command in VS Code
+dotnet publish -c Release ../Nancy.Expressions/Nancy.Expressions.sln -f net8.0
+
+#!csharp
+
+// Load library and other dependencies 
+#r "nuget: Unipi.Nancy.Interactive"
+#r "../Nancy.Expressions/Nancy.Expressions/bin/Release/net8.0/Unipi.Nancy.Expressions.dll"
+#r "../Nancy.Expressions/Nancy.Expressions.Interactive/bin/Release/net8.0/Unipi.Nancy.Expressions.Interactive.dll"
+
+// Nancy
+using Unipi.Nancy.Numerics;
+using Unipi.Nancy.MinPlusAlgebra;
+using Unipi.Nancy.NetworkCalculus;
+using Unipi.Nancy.Interactive;
+
+// Nancy.Expressions
+using Unipi.Nancy.Expressions;
+using Unipi.Nancy.Expressions.Visitors;
+
+Unipi.Nancy.Expressions.Interactive.NancyExpressionKernelExtension.Load(Microsoft.DotNet.Interactive.KernelInvocationContext.Current.HandlingKernel.RootKernel);
+
+#!markdown
+
+The first design goal of *Nancy.Expressions* is to allow to build and compute expressions with a syntax that is close to the one already used in *Nancy*, allowing for easy conversion of existing software. 
+An example of this is shown in the two following code cells: the first one uses Nancy, and the second one uses *Nancy.Expressions*, exploiting the `Expressions` helper class.
+
+#!csharp
+
+var f = new Curve(
+    baseSequence: new Sequence(new Element[]
+    {
+        new Point(time: 0, value: 0),
+        new Segment(startTime: 0, endTime: 2, rightLimitAtStartTime:0, slope: 1),
+        new Point(2, 2),
+        new Segment(2,  3, 2, 0),
+        new Point(3, 2),
+        new Segment(3, 4, 2, 1)
+    }),
+    pseudoPeriodStart: 2,
+    pseudoPeriodLength: 2,
+    pseudoPeriodHeight: 1
+);
+var g = new Curve(
+    baseSequence: new Sequence(new Element[]
+    {
+        new Point(time: 0, value: 0),
+        new Segment(startTime: 0, endTime: 1, rightLimitAtStartTime:0, slope: 3),
+        new Point(1, 3),
+        new Segment(1,  5, 1, 0),
+        new Point(5, 3),
+        new Segment(5, 6, 5, 3)
+    }),
+    pseudoPeriodStart: 1,
+    pseudoPeriodLength: 5,
+    pseudoPeriodHeight: 3
+);
+var f_sac = f.SubAdditiveClosure();
+var conv = Curve.Convolution(f_sac, g);
+var result = Curve.Deconvolution(conv, f_sac);
+
+#!csharp
+
+var f = Expressions.FromCurve(
+    curve: new Curve(
+        baseSequence: new Sequence(new Element[]
+        {
+            new Point(time: 0, value: 0),
+            new Segment(startTime: 0, endTime: 2, rightLimitAtStartTime:0, slope: 1),
+            new Point(2, 2),
+            new Segment(2,  3, 2, 0),
+            new Point(3, 2),
+            new Segment(3, 4, 2, 1)
+        }),
+        pseudoPeriodStart: 2,
+        pseudoPeriodLength: 2,
+        pseudoPeriodHeight: 1
+    ), 
+    name: "f");
+var g = Expressions.FromCurve(
+    curve: new Curve(
+        baseSequence: new Sequence(new Element[]
+        {
+            new Point(time: 0, value: 0),
+            new Segment(startTime: 0, endTime: 1, rightLimitAtStartTime:0, slope: 3),
+            new Point(1, 3),
+            new Segment(1,  5, 1, 0),
+            new Point(5, 3),
+            new Segment(5, 6, 5, 3)
+        }),
+        pseudoPeriodStart: 1,
+        pseudoPeriodLength: 5,
+        pseudoPeriodHeight: 3
+    ),
+    name: "g");
+var f_sac = f.SubAdditiveClosure();
+var conv = Expressions.Convolution(f_sac, g);
+var deconv = Expressions.Deconvolution(conv, f_sac);
+var result = deconv.Compute();
+
+#!markdown
+
+The second objective is to support flexible visualization of expressions, to aid in validation and debugging, using either plaintext, suitable for CLI environments, or LaTeX syntax
+
+#!csharp
+
+Console.WriteLine(deconv); // plaintext syntax
+display(deconv); // LaTeX syntax
+
+#!markdown
+
+The third objective is to allow manipulation of the expressions, in particular to apply equivalences that may reduce their computational complexity.
+
+#!csharp
+
+using Unipi.Nancy.Expressions.Equivalences;
+
+var deconv_sac_equivalence = new DeconvAndSubAdditiveClosure();
+
+display(deconv);
+display(deconv.ApplyEquivalence(deconv_sac_equivalence));
