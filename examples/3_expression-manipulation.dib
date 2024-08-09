@@ -1,0 +1,134 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+This notebook contains examples about the flexible manipulation of expressions provided by *Nancy.Expressions*. 
+In particular, the library allows to apply equivalences to (sub-parts of) expressions that may reduce their computational complexity.
+Furthermore, the user can also replace parts of expressions by specifying which sub-expression needs to be substituted (replace _by-value_) or using its position (replace _by-position_).
+
+#!pwsh
+
+# Compile the Nancy.Expression library
+# Warning: if you modified the source, restart the notebook kernel before re-compiling! Use ctrl+shift+P to find this command in VS Code
+dotnet publish -c Release ../Nancy.Expressions/Nancy.Expressions.sln -f net8.0
+
+#!csharp
+
+// Load libraries and other dependencies 
+#r "nuget: Unipi.Nancy.Interactive"
+#r "../Nancy.Expressions/Nancy.Expressions/bin/Release/net8.0/Unipi.Nancy.Expressions.dll"
+#r "../Nancy.Expressions/Nancy.Expressions.Interactive/bin/Release/net8.0/Unipi.Nancy.Expressions.Interactive.dll"
+
+// Nancy
+using Unipi.Nancy.Numerics;
+using Unipi.Nancy.MinPlusAlgebra;
+using Unipi.Nancy.NetworkCalculus;
+using Unipi.Nancy.Interactive;
+
+// Nancy.Expressions
+using Unipi.Nancy.Expressions;
+using Unipi.Nancy.Expressions.Visitors;
+
+Unipi.Nancy.Expressions.Interactive.NancyExpressionKernelExtension.Load(Microsoft.DotNet.Interactive.KernelInvocationContext.Current.HandlingKernel.RootKernel);
+
+#!markdown
+
+The following code cell constructs the DNC expression $(\overline{f} \otimes g) \oslash \overline{f}$.
+
+#!csharp
+
+var f = Expressions.FromCurve(
+    curve: new Curve(
+        baseSequence: new Sequence(new Element[]
+        {
+            new Point(time: 0, value: 0),
+            new Segment(startTime: 0, endTime: 2, rightLimitAtStartTime:0, slope: 1),
+            new Point(2, 2),
+            new Segment(2,  3, 2, 0),
+            new Point(3, 2),
+            new Segment(3, 4, 2, 1)
+        }),
+        pseudoPeriodStart: 2,
+        pseudoPeriodLength: 2,
+        pseudoPeriodHeight: 1
+    ), 
+    name: "f");
+var g = Expressions.FromCurve(
+    curve: new Curve(
+        baseSequence: new Sequence(new Element[]
+        {
+            new Point(time: 0, value: 0),
+            new Segment(startTime: 0, endTime: 1, rightLimitAtStartTime:0, slope: 3),
+            new Point(1, 3),
+            new Segment(1,  5, 1, 0),
+            new Point(5, 3),
+            new Segment(5, 6, 5, 3)
+        }),
+        pseudoPeriodStart: 1,
+        pseudoPeriodLength: 5,
+        pseudoPeriodHeight: 3
+    ),
+    name: "g");
+var f_sac = f.SubAdditiveClosure();
+var conv = Expressions.Convolution(f_sac, g);
+var deconv = Expressions.Deconvolution(conv, f_sac);
+
+#!markdown
+
+The expression $(\overline{f} \otimes g) \oslash \overline{f}$ is equivalent to $\overline{f} \otimes g$ which allows to avoid completely the deconvolution operation.
+
+#!csharp
+
+using Unipi.Nancy.Expressions.Equivalences;
+
+var deconv_sac_equivalence = new DeconvAndSubAdditiveClosure();
+var deconv_eq = deconv.ApplyEquivalence(deconv_sac_equivalence);
+
+display(deconv);
+display(deconv_eq);
+Console.WriteLine(deconv.Equivalent(deconv_eq));
+
+#!markdown
+
+Example of replacement _by-value_: substitute all occurences of $f$ with $f + h$, and re-apply the previous equivalence.
+
+#!csharp
+
+var h = new SigmaRhoArrivalCurve(1,2);
+var new_deconv = deconv.ReplaceByValue(f, Expressions.Addition(f, h));
+var new_deconv_eq = new_deconv.ApplyEquivalence(deconv_sac_equivalence);
+
+display(new_deconv);
+display(new_deconv_eq);
+Console.WriteLine(new_deconv.Equivalent(new_deconv_eq));
+
+#!markdown
+
+Example of replacement _by-position_: substitute the deconvolution with a convolution, and re-apply the previous equivalence (which does not hold in this case). Another equivalence can be applied in this case: $f \otimes f = f$, when $f$ is subadditive.
+
+#!csharp
+
+var new_deconv2 = deconv.ReplaceByPosition(deconv.RootPosition(), Expressions.Convolution(conv, f_sac));
+var new_deconv_eq2 = new_deconv2.ApplyEquivalence(deconv_sac_equivalence); // Equivalence not applied
+
+display(deconv);
+display(new_deconv2);
+display(new_deconv_eq2);
+
+var new_deconv_eq2_2 = new_deconv2.ApplyEquivalence(new SelfConvolutionSubAdditive());
+
+display(new_deconv_eq2_2);
+Console.WriteLine(new_deconv2.Equivalent(new_deconv_eq2_2));
+
+#!markdown
+
+Other example of replacement _by-position_: replace the right operand of the deconvolution with $h$ from the initial expression.
+
+#!csharp
+
+var new_deconv3 = deconv.ReplaceByPosition(deconv.RootPosition().RightOperand(), Expressions.FromCurve(h));
+
+display(deconv);
+display(new_deconv3);

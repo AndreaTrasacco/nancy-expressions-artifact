@@ -4,7 +4,9 @@
 
 #!markdown
 
-This notebook contains examples of code to support the enumeration of the design goals of *Nancy.Expressions*.
+This notebook shows a comparison between *Nancy* and *Nancy.Expressions* in terms of syntax and behavior.
+The syntax of *Nancy.Expressions* is close to the one already used in *Nancy*, allowing for easy conversion of existing software. 
+The behavior of the two libraries in evaluating a DNC expression differ in the actual moment in which computations are performed, as explained in the following cells.
 
 #!pwsh
 
@@ -14,7 +16,7 @@ dotnet publish -c Release ../Nancy.Expressions/Nancy.Expressions.sln -f net8.0
 
 #!csharp
 
-// Load library and other dependencies 
+// Load libraries and other dependencies 
 #r "nuget: Unipi.Nancy.Interactive"
 #r "../Nancy.Expressions/Nancy.Expressions/bin/Release/net8.0/Unipi.Nancy.Expressions.dll"
 #r "../Nancy.Expressions/Nancy.Expressions.Interactive/bin/Release/net8.0/Unipi.Nancy.Expressions.Interactive.dll"
@@ -33,8 +35,8 @@ Unipi.Nancy.Expressions.Interactive.NancyExpressionKernelExtension.Load(Microsof
 
 #!markdown
 
-The first design goal of *Nancy.Expressions* is to allow to build and compute expressions with a syntax that is close to the one already used in *Nancy*, allowing for easy conversion of existing software. 
-An example of this is shown in the two following code cells: the first one uses Nancy, and the second one uses *Nancy.Expressions*, exploiting the `Expressions` helper class.
+Example of computations using *Nancy*. 
+The code computes the DNC Expression $(\overline{f} \otimes g) \oslash \overline{f}$. `SubAdditiveClosure()`, `Convolution(..)` and `Deconvolution(..)` are *Nancy* methods which immediately compute intermediate results.
 
 #!csharp
 
@@ -69,6 +71,13 @@ var g = new Curve(
 var f_sac = f.SubAdditiveClosure();
 var conv = Curve.Convolution(f_sac, g);
 var result = Curve.Deconvolution(conv, f_sac);
+
+#!markdown
+
+Same example as before, but using *Nancy.Expressions*. 
+`SubAdditiveClosure()`, `Convolution(..)` and `Deconvolution(..)`, in this case, are *Nancy.Expressions* methods which construct the expression in $\mathcal{O}(1)$, thus without making any computation.
+The *Nancy.Expressions* `Compute()` method is the one which evaluates the DNC expression, exploiting the previous methods of *Nancy*.
+*Nancy.Expressions*, by capturing entire expressions, is also able to print them, as shown in the output cell related to the following code cell.
 
 #!csharp
 
@@ -109,24 +118,4 @@ var conv = Expressions.Convolution(f_sac, g);
 var deconv = Expressions.Deconvolution(conv, f_sac);
 var result = deconv.Compute();
 
-#!markdown
-
-The second objective is to support flexible visualization of expressions, to aid in validation and debugging, using either plaintext, suitable for CLI environments, or LaTeX syntax
-
-#!csharp
-
-Console.WriteLine(deconv); // plaintext syntax
-display(deconv); // LaTeX syntax
-
-#!markdown
-
-The third objective is to allow manipulation of the expressions, in particular to apply equivalences that may reduce their computational complexity.
-
-#!csharp
-
-using Unipi.Nancy.Expressions.Equivalences;
-
-var deconv_sac_equivalence = new DeconvAndSubAdditiveClosure();
-
 display(deconv);
-display(deconv.ApplyEquivalence(deconv_sac_equivalence));

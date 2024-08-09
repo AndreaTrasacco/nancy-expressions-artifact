@@ -297,8 +297,11 @@ public abstract class CurveExpression(string expressionName = "", ExpressionSett
         Accept(latexFormatterVisitor);
 
         var latexExpr = latexFormatterVisitor.Result.ToString();
-        if (latexExpr is ['(', _, ..] && latexExpr[^1] == ')') // ^1 accesses the last character
-            latexExpr = latexExpr[1..^1];
+        var startsWithLeftParenthesis = latexExpr.StartsWith("\\left(");
+        var endsWithRightParenthesis = latexExpr.EndsWith("\\right)");
+
+        if (startsWithLeftParenthesis && endsWithRightParenthesis)
+            latexExpr = latexExpr[6..^7];
 
         return latexExpr;
     }

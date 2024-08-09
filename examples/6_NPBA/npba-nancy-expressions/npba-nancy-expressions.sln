@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Expressions", "..\..\..\Nancy.Expressions\Nancy.Expressions\Nancy.Expressions.csproj", "{C880FF7C-C3BD-43A9-91A1-70FF4B37039D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "npba-nancy-expressions", "npba-nancy-expressions\npba-nancy-expressions.csproj", "{1255EAC4-B1CA-4AE4-BDBF-4513CFCE8382}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1255EAC4-B1CA-4AE4-BDBF-4513CFCE8382}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1255EAC4-B1CA-4AE4-BDBF-4513CFCE8382}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1255EAC4-B1CA-4AE4-BDBF-4513CFCE8382}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1255EAC4-B1CA-4AE4-BDBF-4513CFCE8382}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C880FF7C-C3BD-43A9-91A1-70FF4B37039D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C880FF7C-C3BD-43A9-91A1-70FF4B37039D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C880FF7C-C3BD-43A9-91A1-70FF4B37039D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C880FF7C-C3BD-43A9-91A1-70FF4B37039D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
