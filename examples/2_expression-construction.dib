@@ -1,0 +1,51 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+This notebook shows how to use the interface provided by *Nancy.Expressions* to construct the expression $[(\beta_{{1}}-\alpha_{{1}})]{_\uparrow^{+}} \otimes [(\beta_{{4}}-((\alpha_{{3}}+\alpha_{{4}}) \oslash \beta_{{3}}))]{_\uparrow^{+}}$.
+
+#!pwsh
+
+# Compile the Nancy.Expression library
+# Warning: if you modified the source, restart the notebook kernel before re-compiling! Use ctrl+shift+P to find this command in VS Code
+dotnet publish -c Release ../Nancy.Expressions/Nancy.Expressions.sln -f net8.0
+
+#!csharp
+
+// Load libraries and other dependencies 
+#r "nuget: Unipi.Nancy.Interactive"
+#r "../Nancy.Expressions/Nancy.Expressions/bin/Release/net8.0/Unipi.Nancy.Expressions.dll"
+#r "../Nancy.Expressions/Nancy.Expressions.Interactive/bin/Release/net8.0/Unipi.Nancy.Expressions.Interactive.dll"
+
+// Nancy
+using Unipi.Nancy.Numerics;
+using Unipi.Nancy.MinPlusAlgebra;
+using Unipi.Nancy.NetworkCalculus;
+using Unipi.Nancy.Interactive;
+
+// Nancy.Expressions
+using Unipi.Nancy.Expressions;
+using Unipi.Nancy.Expressions.Visitors;
+
+Unipi.Nancy.Expressions.Interactive.NancyExpressionKernelExtension.Load(Microsoft.DotNet.Interactive.KernelInvocationContext.Current.HandlingKernel.RootKernel);
+
+#!csharp
+
+var beta1 = new RateLatencyServiceCurve(1,1);
+var beta2 = new RateLatencyServiceCurve(1,1);
+var beta3 = new RateLatencyServiceCurve(1,1);
+var beta4 = new RateLatencyServiceCurve(1,1);
+var alpha1 = new SigmaRhoArrivalCurve(1,1);
+var alpha3 = new SigmaRhoArrivalCurve(1,1);
+var alpha4 = new SigmaRhoArrivalCurve(1,1);
+var subLeft = Expressions.Subtraction(beta1, alpha1)
+    .ToUpperNonDecreasing()
+    .ToNonNegative();
+var deconv = Expressions.Addition(alpha3, alpha4).Deconvolution(beta3);
+var subRight = Expressions.Subtraction(beta4, deconv)
+    .ToUpperNonDecreasing()
+    .ToNonNegative();
+var e2eServiceCurve2Exp = Expressions.Convolution(subLeft, subRight);
+display(e2eServiceCurve2Exp);

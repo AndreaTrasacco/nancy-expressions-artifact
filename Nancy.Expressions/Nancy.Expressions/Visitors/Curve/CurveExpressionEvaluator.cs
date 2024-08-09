@@ -16,7 +16,7 @@ public class CurveExpressionEvaluator : ICurveExpressionVisitor
         return _result;
     }
 
-    public void Visit(ConcreteCurveExpression expression) => _result = expression.Value;
+    public virtual void Visit(ConcreteCurveExpression expression) => _result = expression.Value;
 
     private void VisitUnary(CurveUnaryExpression<Curve> expression, Func<Curve, Curve> operation)
         => _result = operation(expression.Expression.Value);
@@ -33,75 +33,75 @@ public class CurveExpressionEvaluator : ICurveExpressionVisitor
         _result = operation(curves);
     }
 
-    public void Visit(NegateExpression expression)
+    public virtual void Visit(NegateExpression expression)
         => VisitUnary(expression, curve => curve.Negate());
 
-    public void Visit(ToNonNegativeExpression expression)
+    public virtual void Visit(ToNonNegativeExpression expression)
         => VisitUnary(expression, curve => curve.ToNonNegative());
 
-    public void Visit(SubAdditiveClosureExpression expression)
+    public virtual void Visit(SubAdditiveClosureExpression expression)
         => VisitUnary(expression, curve => curve.SubAdditiveClosure(expression.Settings?.ComputationSettings));
 
-    public void Visit(SuperAdditiveClosureExpression expression)
+    public virtual void Visit(SuperAdditiveClosureExpression expression)
         => VisitUnary(expression, curve => curve.SuperAdditiveClosure(expression.Settings?.ComputationSettings));
 
-    public void Visit(ToUpperNonDecreasingExpression expression)
+    public virtual void Visit(ToUpperNonDecreasingExpression expression)
         => VisitUnary(expression, curve => curve.ToUpperNonDecreasing());
 
-    public void Visit(ToLowerNonDecreasingExpression expression)
+    public virtual void Visit(ToLowerNonDecreasingExpression expression)
         => VisitUnary(expression, curve => curve.ToLowerNonDecreasing());
 
-    public void Visit(ToLeftContinuousExpression expression)
+    public virtual void Visit(ToLeftContinuousExpression expression)
         => VisitUnary(expression, curve => curve.ToLeftContinuous());
 
-    public void Visit(ToRightContinuousExpression expression)
+    public virtual void Visit(ToRightContinuousExpression expression)
         => VisitUnary(expression, curve => curve.ToRightContinuous());
 
-    public void Visit(WithZeroOriginExpression expression)
+    public virtual void Visit(WithZeroOriginExpression expression)
         => VisitUnary(expression, curve => curve.WithZeroOrigin());
 
-    public void Visit(LowerPseudoInverseExpression expression)
+    public virtual void Visit(LowerPseudoInverseExpression expression)
         => VisitUnary(expression, curve => curve.LowerPseudoInverse());
 
-    public void Visit(UpperPseudoInverseExpression expression)
+    public virtual void Visit(UpperPseudoInverseExpression expression)
         => VisitUnary(expression, curve => curve.UpperPseudoInverse());
 
-    public void Visit(AdditionExpression expression)
+    public virtual void Visit(AdditionExpression expression)
         => VisitNAry(expression, curves => Curve.Addition(curves, expression.Settings?.ComputationSettings));
 
-    public void Visit(SubtractionExpression expression)
+    public virtual void Visit(SubtractionExpression expression)
         => VisitBinary(expression, (leftCurve, rightCurve) => Curve.Subtraction(leftCurve, rightCurve));
 
-    public void Visit(MinimumExpression expression)
+    public virtual void Visit(MinimumExpression expression)
         => VisitNAry(expression, curves => Curve.Minimum(curves, expression.Settings?.ComputationSettings));
 
-    public void Visit(MaximumExpression expression)
+    public virtual void Visit(MaximumExpression expression)
         => VisitNAry(expression, curves => Curve.Maximum(curves, expression.Settings?.ComputationSettings));
 
-    public void Visit(ConvolutionExpression expression)
+    public virtual void Visit(ConvolutionExpression expression)
         => VisitNAry(expression, curves => Curve.Convolution(curves, expression.Settings?.ComputationSettings));
 
-    public void Visit(DeconvolutionExpression expression)
+    public virtual void Visit(DeconvolutionExpression expression)
         => VisitBinary(expression, (leftCurve, rightCurve) => Curve.Deconvolution(leftCurve, rightCurve, expression.Settings?.ComputationSettings));
 
-    public void Visit(MaxPlusConvolutionExpression expression)
+    public virtual void Visit(MaxPlusConvolutionExpression expression)
         => VisitNAry(expression, curves => Curve.MaxPlusConvolution(curves, expression.Settings?.ComputationSettings));
 
-    public void Visit(MaxPlusDeconvolutionExpression expression)
+    public virtual void Visit(MaxPlusDeconvolutionExpression expression)
         => VisitBinary(expression, (leftCurve, rightCurve) => Curve.MaxPlusDeconvolution(leftCurve, rightCurve, expression.Settings?.ComputationSettings));
 
-    public void Visit(CompositionExpression expression)
+    public virtual void Visit(CompositionExpression expression)
         => VisitBinary(expression, (leftCurve, rightCurve) => Curve.Composition(leftCurve, rightCurve, expression.Settings?.ComputationSettings));
 
-    public void Visit(DelayByExpression expression)
+    public virtual void Visit(DelayByExpression expression)
         => _result = expression.LeftExpression.Value.DelayBy(expression.RightExpression.Value);
 
-    public void Visit(AnticipateByExpression expression)
+    public virtual void Visit(AnticipateByExpression expression)
         => _result = expression.LeftExpression.Value.AnticipateBy(expression.RightExpression.Value);
 
-    public void Visit(CurvePlaceholderExpression expression)
+    public virtual void Visit(CurvePlaceholderExpression expression)
         => throw new InvalidOperationException("Can't evaluate an expression with placeholders!");
 
-    public void Visit(ScaleExpression expression)
+    public virtual void Visit(ScaleExpression expression)
         => _result = expression.LeftExpression.Value.Scale(expression.RightExpression.Value);
 }

@@ -9,23 +9,23 @@ public class IsZeroAtZeroVisitor : ICurveExpressionVisitor
 {
     public bool IsZeroAtZero;
 
-    public void Visit(ConcreteCurveExpression expression) =>
+    public virtual void Visit(ConcreteCurveExpression expression) =>
         IsZeroAtZero = expression.Value.IsZeroAtZero();
 
     private void _throughCurveComputation(IGenericExpression<Curve> expression) =>
         IsZeroAtZero = expression.Compute().IsZeroAtZero();
     
-    public void Visit(NegateExpression expression)
+    public virtual void Visit(NegateExpression expression)
     {
         expression.Expression.Accept(this);
     }
 
-    public void Visit(ToNonNegativeExpression expression)
+    public virtual void Visit(ToNonNegativeExpression expression)
     {
         IsZeroAtZero = expression.Expression.Compute().ValueAt(Rational.Zero) <= Rational.Zero;
     }
 
-    public void Visit(SubAdditiveClosureExpression expression)
+    public virtual void Visit(SubAdditiveClosureExpression expression)
     {
         // The SAC is 0 in 0 only if the argument is >= 0 in 0
         expression.Expression.Accept(this);
@@ -35,23 +35,23 @@ public class IsZeroAtZeroVisitor : ICurveExpressionVisitor
         }
     }
 
-    public void Visit(SuperAdditiveClosureExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(SuperAdditiveClosureExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(ToUpperNonDecreasingExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(ToUpperNonDecreasingExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(ToLowerNonDecreasingExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(ToLowerNonDecreasingExpression expression) => _throughCurveComputation(expression);
     
-    public void Visit(ToLeftContinuousExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(ToLeftContinuousExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(ToRightContinuousExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(ToRightContinuousExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(WithZeroOriginExpression expression) => IsZeroAtZero = true;
+    public virtual void Visit(WithZeroOriginExpression expression) => IsZeroAtZero = true;
 
-    public void Visit(LowerPseudoInverseExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(LowerPseudoInverseExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(UpperPseudoInverseExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(UpperPseudoInverseExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(AdditionExpression expression)
+    public virtual void Visit(AdditionExpression expression)
     {
         foreach (var e in expression.Expressions)
         {
@@ -62,7 +62,7 @@ public class IsZeroAtZeroVisitor : ICurveExpressionVisitor
         if(!IsZeroAtZero) _throughCurveComputation(expression);
     }
 
-    public void Visit(SubtractionExpression expression)
+    public virtual void Visit(SubtractionExpression expression)
     {
         expression.LeftExpression.Accept(this);
         if (IsZeroAtZero)
@@ -73,7 +73,7 @@ public class IsZeroAtZeroVisitor : ICurveExpressionVisitor
         if (!IsZeroAtZero) _throughCurveComputation(expression);
     }
 
-    public void Visit(MinimumExpression expression)
+    public virtual void Visit(MinimumExpression expression)
     {
         foreach (var e in expression.Expressions)
         {
@@ -84,7 +84,7 @@ public class IsZeroAtZeroVisitor : ICurveExpressionVisitor
         if(!IsZeroAtZero) _throughCurveComputation(expression);
     }
 
-    public void Visit(MaximumExpression expression)
+    public virtual void Visit(MaximumExpression expression)
     {
         foreach (var e in expression.Expressions)
         {
@@ -95,24 +95,24 @@ public class IsZeroAtZeroVisitor : ICurveExpressionVisitor
         if(!IsZeroAtZero) _throughCurveComputation(expression);
     }
 
-    public void Visit(ConvolutionExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(ConvolutionExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(DeconvolutionExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(DeconvolutionExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(MaxPlusConvolutionExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(MaxPlusConvolutionExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(MaxPlusDeconvolutionExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(MaxPlusDeconvolutionExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(CompositionExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(CompositionExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(DelayByExpression expression) => expression.LeftExpression.Accept(this);
+    public virtual void Visit(DelayByExpression expression) => expression.LeftExpression.Accept(this);
 
-    public void Visit(AnticipateByExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(AnticipateByExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(CurvePlaceholderExpression expression)
+    public virtual void Visit(CurvePlaceholderExpression expression)
         => throw new InvalidOperationException(GetType() + ": Cannot perform the check on a placeholder expression!");
 
-    public void Visit(ScaleExpression expression)
+    public virtual void Visit(ScaleExpression expression)
     {
         if (expression.RightExpression.Compute() == 0) IsZeroAtZero = true;
         else expression.LeftExpression.Accept(this);

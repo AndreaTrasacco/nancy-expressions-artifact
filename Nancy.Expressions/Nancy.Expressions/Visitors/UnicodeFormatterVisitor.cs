@@ -152,25 +152,25 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         Result.Append(nameNumber);
     }
 
-    public void Visit(ConcreteCurveExpression expression)
+    public virtual void Visit(ConcreteCurveExpression expression)
         => FormatByName(expression.Name);
 
-    public void Visit(RationalAdditionExpression expression)
+    public virtual void Visit(RationalAdditionExpression expression)
         => VisitNAryInfix(expression, " + ");
 
-    public void Visit(RationalProductExpression expression)
+    public virtual void Visit(RationalProductExpression expression)
         => VisitNAryInfix(expression, " * ");
 
-    public void Visit(RationalDivisionExpression expression)
+    public virtual void Visit(RationalDivisionExpression expression)
         => VisitBinaryInfix(expression, "/");
 
-    public void Visit(RationalLeastCommonMultipleExpression expression)
+    public virtual void Visit(RationalLeastCommonMultipleExpression expression)
         => VisitNAryPrefix(expression, "lcm");
 
-    public void Visit(RationalGreatestCommonDivisorExpression expression)
+    public virtual void Visit(RationalGreatestCommonDivisorExpression expression)
         => VisitNAryPrefix(expression, "gcd");
 
-    public void Visit(RationalNumberExpression numberExpression)
+    public virtual void Visit(RationalNumberExpression numberExpression)
     {
         if (!numberExpression.Name.Equals("") && (showRationalsAsName || depth <= 0))
         {
@@ -181,7 +181,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         Result.Append(numberExpression.Value);
     }
 
-    public void Visit(NegateExpression expression)
+    public virtual void Visit(NegateExpression expression)
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
@@ -196,7 +196,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         depth++;
     }
 
-    public void Visit(ToNonNegativeExpression expression)
+    public virtual void Visit(ToNonNegativeExpression expression)
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
@@ -215,7 +215,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         depth++;
     }
 
-    public void Visit(SubAdditiveClosureExpression expression)
+    public virtual void Visit(SubAdditiveClosureExpression expression)
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
@@ -230,7 +230,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         depth++;
     }
 
-    public void Visit(SuperAdditiveClosureExpression expression)
+    public virtual void Visit(SuperAdditiveClosureExpression expression)
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
@@ -245,7 +245,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         depth++;
     }
 
-    public void Visit(ToUpperNonDecreasingExpression expression)
+    public virtual void Visit(ToUpperNonDecreasingExpression expression)
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
@@ -262,7 +262,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         depth++;
     }
 
-    public void Visit(ToLowerNonDecreasingExpression expression)
+    public virtual void Visit(ToLowerNonDecreasingExpression expression)
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
@@ -279,7 +279,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         depth++;
     }
 
-    public void Visit(ToLeftContinuousExpression expression)
+    public virtual void Visit(ToLeftContinuousExpression expression)
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
@@ -293,7 +293,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         depth++;
     }
 
-    public void Visit(ToRightContinuousExpression expression)
+    public virtual void Visit(ToRightContinuousExpression expression)
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
@@ -307,7 +307,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         depth++;
     }
 
-    public void Visit(WithZeroOriginExpression expression)
+    public virtual void Visit(WithZeroOriginExpression expression)
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
@@ -322,7 +322,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         depth++;
     }
 
-    public void Visit(LowerPseudoInverseExpression expression)
+    public virtual void Visit(LowerPseudoInverseExpression expression)
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
@@ -337,7 +337,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         depth++;
     }
 
-    public void Visit(UpperPseudoInverseExpression expression)
+    public virtual void Visit(UpperPseudoInverseExpression expression)
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
@@ -352,46 +352,46 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         depth++;
     }
 
-    public void Visit(AdditionExpression expression)
+    public virtual void Visit(AdditionExpression expression)
         => VisitNAryInfix(expression, " + ");
 
-    public void Visit(SubtractionExpression expression)
+    public virtual void Visit(SubtractionExpression expression)
         => VisitBinaryInfix(expression, " - ");
 
-    public void Visit(MinimumExpression expression)
+    public virtual void Visit(MinimumExpression expression)
         => VisitNAryInfix(expression, " \u2227 ");
 
-    public void Visit(MaximumExpression expression)
+    public virtual void Visit(MaximumExpression expression)
         => VisitNAryInfix(expression, " \u2228 ");
 
-    public void Visit(ConvolutionExpression expression)
+    public virtual void Visit(ConvolutionExpression expression)
         => VisitNAryInfix(expression, " \u2297 ");
 
-    public void Visit(DeconvolutionExpression expression)
+    public virtual void Visit(DeconvolutionExpression expression)
         => VisitBinaryInfix(expression, " \u2298 ");
 
-    public void Visit(MaxPlusConvolutionExpression expression)
+    public virtual void Visit(MaxPlusConvolutionExpression expression)
         => VisitNAryInfix(expression, " \u0305⊗ ");
 
-    public void Visit(MaxPlusDeconvolutionExpression expression)
+    public virtual void Visit(MaxPlusDeconvolutionExpression expression)
         => VisitBinaryInfix(expression, " \u0305⊘ ");
 
-    public void Visit(CompositionExpression expression)
+    public virtual void Visit(CompositionExpression expression)
         => VisitBinaryInfix(expression, " \u2218 ");
 
-    public void Visit(DelayByExpression expression)
+    public virtual void Visit(DelayByExpression expression)
         => VisitBinaryPrefix(expression, "delayBy");
 
-    public void Visit(AnticipateByExpression expression)
+    public virtual void Visit(AnticipateByExpression expression)
         => VisitBinaryPrefix(expression, "anticipateBy");
 
-    public void Visit(NegateRationalExpression expression)
+    public virtual void Visit(NegateRationalExpression expression)
     {
         Result.Append('-');
         expression.Expression.Accept(this);
     }
 
-    public void Visit(InvertRationalExpression expression)
+    public virtual void Visit(InvertRationalExpression expression)
     {
         var parenthesis = expression.Expression is RationalNumberExpression;
         if (parenthesis)
@@ -402,19 +402,19 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         Result.Append("\u207B" + "\u00B9");
     }
 
-    public void Visit(HorizontalDeviationExpression expression)
+    public virtual void Visit(HorizontalDeviationExpression expression)
         => VisitBinaryPrefix(expression, "hdev");
 
-    public void Visit(VerticalDeviationExpression expression)
+    public virtual void Visit(VerticalDeviationExpression expression)
         => VisitBinaryPrefix(expression, "vdev");
 
-    public void Visit(CurvePlaceholderExpression expression)
+    public virtual void Visit(CurvePlaceholderExpression expression)
         => Result.Append(expression.Name);
 
-    public void Visit(RationalPlaceholderExpression expression)
+    public virtual void Visit(RationalPlaceholderExpression expression)
         => Result.Append(expression.Name);
 
-    public void Visit(ScaleExpression expression)
+    public virtual void Visit(ScaleExpression expression)
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {

@@ -11,89 +11,89 @@ public class ChangeNameCurveVisitor(string newName) : ICurveExpressionVisitor
 {
     public CurveExpression Result = Expressions.FromCurve(Curve.Zero());
 
-    public void Visit(ConcreteCurveExpression expression)
+    public virtual void Visit(ConcreteCurveExpression expression)
         => Result = Expressions.FromCurve(expression.Value, newName);
 
-    public void Visit(NegateExpression expression)
+    public virtual void Visit(NegateExpression expression)
         => Result = Expressions.Negate((CurveExpression)expression.Expression, newName);
 
-    public void Visit(ToNonNegativeExpression expression)
+    public virtual void Visit(ToNonNegativeExpression expression)
         => Result = Expressions.ToNonNegative((CurveExpression)expression.Expression, newName);
 
-    public void Visit(SubAdditiveClosureExpression expression)
+    public virtual void Visit(SubAdditiveClosureExpression expression)
         => Result = Expressions.SubAdditiveClosure((CurveExpression)expression.Expression, newName);
 
-    public void Visit(SuperAdditiveClosureExpression expression)
+    public virtual void Visit(SuperAdditiveClosureExpression expression)
         => Result = Expressions.SuperAdditiveClosure((CurveExpression)expression.Expression, newName);
 
-    public void Visit(ToUpperNonDecreasingExpression expression)
+    public virtual void Visit(ToUpperNonDecreasingExpression expression)
         => Result = Expressions.ToUpperNonDecreasing((CurveExpression)expression.Expression, newName);
 
-    public void Visit(ToLowerNonDecreasingExpression expression)
+    public virtual void Visit(ToLowerNonDecreasingExpression expression)
         => Result = Expressions.ToLowerNonDecreasing((CurveExpression)expression.Expression, newName);
 
-    public void Visit(ToLeftContinuousExpression expression)
+    public virtual void Visit(ToLeftContinuousExpression expression)
         => Result = Expressions.ToLeftContinuous((CurveExpression)expression.Expression, newName);
 
-    public void Visit(ToRightContinuousExpression expression)
+    public virtual void Visit(ToRightContinuousExpression expression)
         => Result = Expressions.ToRightContinuous((CurveExpression)expression.Expression, newName);
 
-    public void Visit(WithZeroOriginExpression expression)
+    public virtual void Visit(WithZeroOriginExpression expression)
         => Result = Expressions.WithZeroOrigin((CurveExpression)expression.Expression, newName);
 
-    public void Visit(LowerPseudoInverseExpression expression)
+    public virtual void Visit(LowerPseudoInverseExpression expression)
         => Result = Expressions.LowerPseudoInverse((CurveExpression)expression.Expression, newName);
 
-    public void Visit(UpperPseudoInverseExpression expression)
+    public virtual void Visit(UpperPseudoInverseExpression expression)
         => Result = Expressions.UpperPseudoInverse((CurveExpression)expression.Expression, newName);
 
-    public void Visit(AdditionExpression expression)
+    public virtual void Visit(AdditionExpression expression)
         => Result = new AdditionExpression(expression.Expressions, newName);
 
 
-    public void Visit(SubtractionExpression expression)
+    public virtual void Visit(SubtractionExpression expression)
         => Result = Expressions.Subtraction((CurveExpression)expression.LeftExpression,
             (CurveExpression)expression.RightExpression, newName);
 
-    public void Visit(MinimumExpression expression)
+    public virtual void Visit(MinimumExpression expression)
         => Result = new MinimumExpression(expression.Expressions, newName);
 
-    public void Visit(MaximumExpression expression)
+    public virtual void Visit(MaximumExpression expression)
         => Result = new MaximumExpression(expression.Expressions, newName);
 
 
-    public void Visit(ConvolutionExpression expression)
+    public virtual void Visit(ConvolutionExpression expression)
         => Result = new ConvolutionExpression(expression.Expressions, newName);
 
 
-    public void Visit(DeconvolutionExpression expression)
+    public virtual void Visit(DeconvolutionExpression expression)
         => Result = Expressions.Deconvolution((CurveExpression)expression.LeftExpression,
             (CurveExpression)expression.RightExpression, newName);
 
-    public void Visit(MaxPlusConvolutionExpression expression)
+    public virtual void Visit(MaxPlusConvolutionExpression expression)
         => Result = new MaxPlusConvolutionExpression(expression.Expressions, newName);
 
 
-    public void Visit(MaxPlusDeconvolutionExpression expression)
+    public virtual void Visit(MaxPlusDeconvolutionExpression expression)
         => Result = Expressions.MaxPlusDeconvolution((CurveExpression)expression.LeftExpression,
             (CurveExpression)expression.RightExpression, newName);
 
-    public void Visit(CompositionExpression expression)
+    public virtual void Visit(CompositionExpression expression)
         => Result = Expressions.Composition((CurveExpression)expression.LeftExpression,
             (CurveExpression)expression.RightExpression, newName);
 
-    public void Visit(DelayByExpression expression)
+    public virtual void Visit(DelayByExpression expression)
         => Result = Expressions.DelayBy((CurveExpression)expression.LeftExpression,
             (RationalExpression)expression.RightExpression, newName);
 
-    public void Visit(AnticipateByExpression expression)
+    public virtual void Visit(AnticipateByExpression expression)
         => Result = Expressions.AnticipateBy((CurveExpression)expression.LeftExpression,
             (RationalExpression)expression.RightExpression, newName);
 
-    public void Visit(CurvePlaceholderExpression expression)
+    public virtual void Visit(CurvePlaceholderExpression expression)
         => Result = new CurvePlaceholderExpression(newName);
 
-    public void Visit(ScaleExpression expression)
+    public virtual void Visit(ScaleExpression expression)
         => Result = Expressions.Scale((CurveExpression)expression.LeftExpression,
             (RationalExpression)expression.RightExpression, newName);
 }

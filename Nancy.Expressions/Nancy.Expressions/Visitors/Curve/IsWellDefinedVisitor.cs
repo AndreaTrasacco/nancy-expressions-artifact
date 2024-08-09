@@ -8,45 +8,45 @@ public class IsWellDefinedVisitor : ICurveExpressionVisitor
     public bool IsWellDefined;
 
     // A curve is always well-defined
-    public void Visit(ConcreteCurveExpression expression) => IsWellDefined = true;
+    public virtual void Visit(ConcreteCurveExpression expression) => IsWellDefined = true;
 
-    public void Visit(NegateExpression expression) => expression.Expression.Accept(this);
+    public virtual void Visit(NegateExpression expression) => expression.Expression.Accept(this);
 
-    public void Visit(ToNonNegativeExpression expression) => expression.Expression.Accept(this);
+    public virtual void Visit(ToNonNegativeExpression expression) => expression.Expression.Accept(this);
 
-    public void Visit(SubAdditiveClosureExpression expression)
+    public virtual void Visit(SubAdditiveClosureExpression expression)
     {
         if (expression.Expression.Value.IsFinite) IsWellDefined = true;
         else if (expression.Expression.Value.SupValue() == Rational.PlusInfinity &&
                  expression.Expression.Value.InfValue() == Rational.MinusInfinity) IsWellDefined = false;
     }
 
-    public void Visit(SuperAdditiveClosureExpression expression)
+    public virtual void Visit(SuperAdditiveClosureExpression expression)
     {
         throw new NotImplementedException();
     }
 
-    public void Visit(ToUpperNonDecreasingExpression expression) => IsWellDefined = true;
+    public virtual void Visit(ToUpperNonDecreasingExpression expression) => IsWellDefined = true;
 
-    public void Visit(ToLowerNonDecreasingExpression expression) => expression.Expression.Accept(this);
+    public virtual void Visit(ToLowerNonDecreasingExpression expression) => expression.Expression.Accept(this);
 
-    public void Visit(ToLeftContinuousExpression expression) => expression.Expression.Accept(this);
+    public virtual void Visit(ToLeftContinuousExpression expression) => expression.Expression.Accept(this);
 
-    public void Visit(ToRightContinuousExpression expression) => expression.Expression.Accept(this);
+    public virtual void Visit(ToRightContinuousExpression expression) => expression.Expression.Accept(this);
 
-    public void Visit(WithZeroOriginExpression expression) => expression.Expression.Accept(this);
+    public virtual void Visit(WithZeroOriginExpression expression) => expression.Expression.Accept(this);
 
-    public void Visit(LowerPseudoInverseExpression expression)
+    public virtual void Visit(LowerPseudoInverseExpression expression)
     {
         throw new NotImplementedException();
     }
 
-    public void Visit(UpperPseudoInverseExpression expression)
+    public virtual void Visit(UpperPseudoInverseExpression expression)
     {
         throw new NotImplementedException();
     }
 
-    public void Visit(AdditionExpression expression)
+    public virtual void Visit(AdditionExpression expression)
     {
         var plusInfinity = 0;
         var minusInfinity = 0;
@@ -61,7 +61,7 @@ public class IsWellDefinedVisitor : ICurveExpressionVisitor
         IsWellDefined = plusInfinity == 0 || minusInfinity == 0;
     }
 
-    public void Visit(SubtractionExpression expression)
+    public virtual void Visit(SubtractionExpression expression)
     {
         // If at least one of the operands is finite --> Subtraction is finite
         if (expression.LeftExpression.Value.IsFinite || expression.RightExpression.Value.IsFinite) IsWellDefined = true;
@@ -73,11 +73,11 @@ public class IsWellDefinedVisitor : ICurveExpressionVisitor
                  expression.LeftExpression.Value.SupValue() == Rational.PlusInfinity) IsWellDefined = false;
     }
 
-    public void Visit(MinimumExpression expression) => IsWellDefined = true;
+    public virtual void Visit(MinimumExpression expression) => IsWellDefined = true;
 
-    public void Visit(MaximumExpression expression) => IsWellDefined = true;
+    public virtual void Visit(MaximumExpression expression) => IsWellDefined = true;
 
-    public void Visit(ConvolutionExpression expression)
+    public virtual void Visit(ConvolutionExpression expression)
     {
         var plusInfinity = 0;
         var minusInfinity = 0;
@@ -92,7 +92,7 @@ public class IsWellDefinedVisitor : ICurveExpressionVisitor
         IsWellDefined = plusInfinity == 0 || minusInfinity == 0;
     }
 
-    public void Visit(DeconvolutionExpression expression)
+    public virtual void Visit(DeconvolutionExpression expression)
     {
         // f deconv g is undefined if ∃ t1 ≤ t2, f (t2) = g(t1) = +∞ (or−∞)
         if (expression.LeftExpression.Value.IsFinite || expression.RightExpression.Value.IsFinite) IsWellDefined = true;
@@ -102,35 +102,35 @@ public class IsWellDefinedVisitor : ICurveExpressionVisitor
         }
     }
 
-    public void Visit(MaxPlusConvolutionExpression expression)
+    public virtual void Visit(MaxPlusConvolutionExpression expression)
     {
         throw new NotImplementedException();
     }
 
-    public void Visit(MaxPlusDeconvolutionExpression expression)
+    public virtual void Visit(MaxPlusDeconvolutionExpression expression)
     {
         throw new NotImplementedException();
     }
 
-    public void Visit(CompositionExpression expression)
+    public virtual void Visit(CompositionExpression expression)
     {
         throw new NotImplementedException();
     }
 
-    public void Visit(DelayByExpression expression)
+    public virtual void Visit(DelayByExpression expression)
     {
         throw new NotImplementedException();
     }
 
-    public void Visit(AnticipateByExpression expression)
+    public virtual void Visit(AnticipateByExpression expression)
     {
         throw new NotImplementedException();
     }
 
-    public void Visit(CurvePlaceholderExpression expression)
+    public virtual void Visit(CurvePlaceholderExpression expression)
         => throw new InvalidOperationException(GetType() + ": Cannot perform the check on a placeholder expression!");
 
-    public void Visit(ScaleExpression expression)
+    public virtual void Visit(ScaleExpression expression)
     {
         throw new NotImplementedException();
     }

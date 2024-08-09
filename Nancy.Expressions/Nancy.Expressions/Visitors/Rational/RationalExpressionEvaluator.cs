@@ -17,37 +17,37 @@ public class RationalExpressionEvaluator : IRationalExpressionVisitor
         return _result;
     }
 
-    public void Visit(HorizontalDeviationExpression expression)
+    public virtual void Visit(HorizontalDeviationExpression expression)
         => _result = Curve.HorizontalDeviation(expression.LeftExpression.Value, expression.RightExpression.Value);
 
-    public void Visit(VerticalDeviationExpression expression)
+    public virtual void Visit(VerticalDeviationExpression expression)
         => _result = Curve.HorizontalDeviation(expression.LeftExpression.Value, expression.RightExpression.Value);
 
-    public void Visit(RationalAdditionExpression expression)
+    public virtual void Visit(RationalAdditionExpression expression)
         => _result = expression.Expressions.Aggregate(Rational.Zero, (current, e) => current + e.Value);
 
-    public void Visit(RationalProductExpression expression)
+    public virtual void Visit(RationalProductExpression expression)
         => _result = expression.Expressions.Aggregate(Rational.One, (current, e) => current * e.Value);
 
-    public void Visit(RationalDivisionExpression expression)
+    public virtual void Visit(RationalDivisionExpression expression)
         => _result = expression.LeftExpression.Value / expression.RightExpression.Value;
 
-    public void Visit(RationalLeastCommonMultipleExpression expression)
+    public virtual void Visit(RationalLeastCommonMultipleExpression expression)
         => _result = expression.Expressions
             .Select(e => e.Value )
             .Aggregate((current, next) => Rational.LeastCommonMultiple(current, next));
 
-    public void Visit(RationalGreatestCommonDivisorExpression expression)
+    public virtual void Visit(RationalGreatestCommonDivisorExpression expression)
         => _result = expression.Expressions
             .Select(e => e.Value )
             .Aggregate((current, next) => Rational.GreatestCommonDivisor(current, next));
 
-    public void Visit(RationalNumberExpression expression) => _result = expression.Value;
+    public virtual void Visit(RationalNumberExpression expression) => _result = expression.Value;
 
-    public void Visit(NegateRationalExpression expression) => _result = Rational.Negate(expression.Expression.Value);
+    public virtual void Visit(NegateRationalExpression expression) => _result = Rational.Negate(expression.Expression.Value);
 
-    public void Visit(InvertRationalExpression expression) => _result = Rational.Invert(expression.Expression.Value);
+    public virtual void Visit(InvertRationalExpression expression) => _result = Rational.Invert(expression.Expression.Value);
 
-    public void Visit(RationalPlaceholderExpression expression)
+    public virtual void Visit(RationalPlaceholderExpression expression)
         => throw new InvalidOperationException("Can't evaluate an expression with placeholders!");
 }

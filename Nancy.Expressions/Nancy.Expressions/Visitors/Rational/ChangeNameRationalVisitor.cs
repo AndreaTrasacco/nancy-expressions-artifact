@@ -11,38 +11,38 @@ public class ChangeNameRationalVisitor(string newName) : IRationalExpressionVisi
 {
     public RationalExpression Result = Expressions.FromRational(Rational.Zero);
 
-    public void Visit(HorizontalDeviationExpression expression)
+    public virtual void Visit(HorizontalDeviationExpression expression)
         => Result = Expressions.HorizontalDeviation((CurveExpression)expression.LeftExpression,
             (CurveExpression)expression.RightExpression, newName);
 
-    public void Visit(VerticalDeviationExpression expression)
+    public virtual void Visit(VerticalDeviationExpression expression)
         => Result = Expressions.VerticalDeviation((CurveExpression)expression.LeftExpression,
             (CurveExpression)expression.RightExpression, newName);
 
-    public void Visit(RationalAdditionExpression expression)
+    public virtual void Visit(RationalAdditionExpression expression)
         => Result = new RationalAdditionExpression(expression.Expressions, newName);
 
-    public void Visit(RationalProductExpression expression)
+    public virtual void Visit(RationalProductExpression expression)
         => Result = new RationalProductExpression(expression.Expressions, newName);
 
-    public void Visit(RationalDivisionExpression expression)
+    public virtual void Visit(RationalDivisionExpression expression)
         => Result = new RationalDivisionExpression(expression.LeftExpression, expression.RightExpression, newName);
 
-    public void Visit(RationalLeastCommonMultipleExpression expression)
+    public virtual void Visit(RationalLeastCommonMultipleExpression expression)
         => Result = new RationalLeastCommonMultipleExpression(expression.Expressions, newName);
 
-    public void Visit(RationalGreatestCommonDivisorExpression expression)
+    public virtual void Visit(RationalGreatestCommonDivisorExpression expression)
         => Result = new RationalGreatestCommonDivisorExpression(expression.Expressions, newName);
 
-    public void Visit(RationalNumberExpression expression)
+    public virtual void Visit(RationalNumberExpression expression)
         => Result = Expressions.FromRational(expression.Value, newName);
 
-    public void Visit(NegateRationalExpression expression)
+    public virtual void Visit(NegateRationalExpression expression)
         => Result = Expressions.Negate((RationalExpression)expression.Expression, newName);
 
-    public void Visit(InvertRationalExpression expression)
+    public virtual void Visit(InvertRationalExpression expression)
         => Result = Expressions.Invert((RationalExpression)expression.Expression, newName);
 
-    public void Visit(RationalPlaceholderExpression expression)
+    public virtual void Visit(RationalPlaceholderExpression expression)
         => Result = new RationalPlaceholderExpression(newName);
 }

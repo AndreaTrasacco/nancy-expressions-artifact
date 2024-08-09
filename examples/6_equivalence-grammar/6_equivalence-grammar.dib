@@ -1,0 +1,97 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+In this notebook we show how the user can define a new equivalence in _Nancy.Expressions_.
+There are two possibilities:
+1) Programmatic way, specializing the `Equivalence` class;
+2) Textual way, writing the equivalence following the syntax defined in the library (NetCalG.g4 file in Grammar directory of the library).
+
+#!pwsh
+
+# Compile the Nancy.Expression library
+# Warning: if you modified the source, restart the notebook kernel before re-compiling! Use ctrl+shift+P to find this command in VS Code
+dotnet publish -c Release ../../Nancy.Expressions/Nancy.Expressions.sln -f net8.0
+
+#!csharp
+
+// Load libraries and other dependencies 
+#r "nuget: Unipi.Nancy.Interactive"
+#r "nuget: Antlr4.Runtime.Standard"
+#r "../../Nancy.Expressions/Nancy.Expressions/bin/Release/net8.0/Unipi.Nancy.Expressions.dll"
+#r "../../Nancy.Expressions/Nancy.Expressions.Interactive/bin/Release/net8.0/Unipi.Nancy.Expressions.Interactive.dll"
+
+// Nancy
+using Unipi.Nancy.Numerics;
+using Unipi.Nancy.MinPlusAlgebra;
+using Unipi.Nancy.NetworkCalculus;
+using Unipi.Nancy.Interactive;
+
+// Nancy.Expressions
+using Unipi.Nancy.Expressions;
+using Unipi.Nancy.Expressions.Visitors;
+using Unipi.Nancy.Expressions.Equivalences;
+
+Unipi.Nancy.Expressions.Interactive.NancyExpressionKernelExtension.Load(Microsoft.DotNet.Interactive.KernelInvocationContext.Current.HandlingKernel.RootKernel);
+
+#!markdown
+
+Example of the programmatic definition of an equivalence. The trivial equivalence is $a*f = f$, with $a \in \mathcal{Q}, a=1$.
+
+#!csharp
+
+public class TrivialEquivalence : Equivalence
+{
+    public TrivialEquivalence() :
+        base(
+            leftSideExpression: Expressions.Scale(Expressions.Placeholder("f"), Expressions.RationalPlaceholder("a")),
+            rightSideExpression: Expressions.Placeholder("f")
+            )
+    {
+        AddHypothesis("a", (RationalExpression a) => a.Value == 1);
+    }
+}
+
+#!markdown
+
+Use of the equivalence.
+
+#!csharp
+
+var equivalence = new TrivialEquivalence();
+
+var f = new SigmaRhoArrivalCurve(1,2);
+var expression = Expressions.Scale(f, 1);
+
+display(expression);
+display(expression.ApplyEquivalence(equivalence));
+
+#!markdown
+
+Example of use of the textual declaration of equivalences. Two equivalences are defined, following the syntax specified in _Nancy.Expressions_, inside the file _my-equivalences.eq_.
+The following snippet of code reads the two equivalences e creates the corresponding `Equivalence` objects, then they are applied to some expressions.
+
+#!csharp
+
+// Load the equivalences
+var equivalences = Equivalence.ReadEquivalences("my-equivalences.eq").ToArray();
+
+Curve a = new RateLatencyServiceCurve(1, 2).SubAdditiveClosure();
+Curve b = new RateLatencyServiceCurve(2, 4).SubAdditiveClosure();
+
+var expression = Expressions.Convolution(a, b);
+var eq = expression.ApplyEquivalence(equivalences[0]);
+display(expression);
+display(eq);
+
+var beta1 = new RateLatencyServiceCurve(10,20);
+var beta2 = new RateLatencyServiceCurve(3,4);
+
+var sacBeta1 = Expressions.SubAdditiveClosure(beta1);
+var expr = Expressions.Convolution(sacBeta1, beta2);
+
+Console.WriteLine("Original Expression: " + expr);
+Console.WriteLine("After application of the first equivalence: " + expr.ApplyEquivalence(equivalences[0]));
+Console.WriteLine("After application of the second equivalence: " + expr.ApplyEquivalence(equivalences[1]));

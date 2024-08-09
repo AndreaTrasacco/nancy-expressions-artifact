@@ -1,4 +1,5 @@
-# About the examples
+# TODO --> DESCRIBE EXAMPLES (+add example of depth for visualization)
+## About the examples
 
 This folder contains a number of examples of use of the Nancy.Expressions library. The snippets of code are contained inside interactive notebooks.
 

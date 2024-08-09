@@ -6,7 +6,7 @@ public class ConvolutionSubAdditiveWithDominance : Equivalence
 {
     public ConvolutionSubAdditiveWithDominance() :
         base(Expressions.Convolution(Expressions.Placeholder("f"), Expressions.Placeholder("g")),
-            Nancy.Expressions.Expressions.Placeholder("f"))
+            Expressions.Placeholder("f"))
     {
         AddHypothesis("f", f => f.IsSubAdditive);
         AddHypothesis("g", g => g.IsZeroAtZero);

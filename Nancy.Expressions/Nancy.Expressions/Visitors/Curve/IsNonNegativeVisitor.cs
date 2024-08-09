@@ -7,12 +7,12 @@ public class IsNonNegativeVisitor : ICurveExpressionVisitor
 {
     public bool IsNonNegative;
     
-    public void Visit(ConcreteCurveExpression expression) => IsNonNegative = expression.Value.IsNonNegative;
+    public virtual void Visit(ConcreteCurveExpression expression) => IsNonNegative = expression.Value.IsNonNegative;
 
     private void _throughCurveComputation(IGenericExpression<Curve> expression) =>
         IsNonNegative = expression.Compute().IsNonNegative;
 
-    public void Visit(NegateExpression expression)
+    public virtual void Visit(NegateExpression expression)
     {
         expression.Expression.Accept(this);
         // If the argument is "NonNegative" then the negation of it won't be "NonNegative"
@@ -20,9 +20,9 @@ public class IsNonNegativeVisitor : ICurveExpressionVisitor
         else _throughCurveComputation(expression);
     }
 
-    public void Visit(ToNonNegativeExpression expression) => IsNonNegative = true;
+    public virtual void Visit(ToNonNegativeExpression expression) => IsNonNegative = true;
 
-    public void Visit(SubAdditiveClosureExpression expression)
+    public virtual void Visit(SubAdditiveClosureExpression expression)
     {
         if (((CurveExpression)expression.Expression).IsNonDecreasing)
         {
@@ -32,39 +32,39 @@ public class IsNonNegativeVisitor : ICurveExpressionVisitor
         _throughCurveComputation(expression);
     }
 
-    public void Visit(SuperAdditiveClosureExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(SuperAdditiveClosureExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(ToUpperNonDecreasingExpression expression)
+    public virtual void Visit(ToUpperNonDecreasingExpression expression)
     {
         expression.Expression.Accept(this);
         if(!IsNonNegative) _throughCurveComputation(expression);
     }
 
-    public void Visit(ToLowerNonDecreasingExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(ToLowerNonDecreasingExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(ToLeftContinuousExpression expression)
+    public virtual void Visit(ToLeftContinuousExpression expression)
     {
         expression.Expression.Accept(this);
         if(!IsNonNegative) _throughCurveComputation(expression);
     }
 
-    public void Visit(ToRightContinuousExpression expression)
+    public virtual void Visit(ToRightContinuousExpression expression)
     {
         expression.Expression.Accept(this);
         if(!IsNonNegative) _throughCurveComputation(expression);
     }
 
-    public void Visit(WithZeroOriginExpression expression)
+    public virtual void Visit(WithZeroOriginExpression expression)
     {
         expression.Expression.Accept(this);
         if(!IsNonNegative) _throughCurveComputation(expression);
     }
 
-    public void Visit(LowerPseudoInverseExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(LowerPseudoInverseExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(UpperPseudoInverseExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(UpperPseudoInverseExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(AdditionExpression expression)
+    public virtual void Visit(AdditionExpression expression)
     {
         foreach (var e in expression.Expressions)
         {
@@ -80,9 +80,9 @@ public class IsNonNegativeVisitor : ICurveExpressionVisitor
         if(!IsNonNegative) _throughCurveComputation(expression);
     }
 
-    public void Visit(SubtractionExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(SubtractionExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(MinimumExpression expression)
+    public virtual void Visit(MinimumExpression expression)
     {
         // If all operands are non negative --> then the minimum is non negative
         foreach (var e in expression.Expressions)
@@ -93,7 +93,7 @@ public class IsNonNegativeVisitor : ICurveExpressionVisitor
         }
     }
 
-    public void Visit(MaximumExpression expression)
+    public virtual void Visit(MaximumExpression expression)
     {
         // If at least one operand is non negative --> then the maximum is non negative
         foreach (var e in expression.Expressions)
@@ -104,7 +104,7 @@ public class IsNonNegativeVisitor : ICurveExpressionVisitor
         }
     }
 
-    public void Visit(ConvolutionExpression expression)
+    public virtual void Visit(ConvolutionExpression expression)
     {
         foreach (var e in expression.Expressions)
         {
@@ -120,7 +120,7 @@ public class IsNonNegativeVisitor : ICurveExpressionVisitor
         if(!IsNonNegative) _throughCurveComputation(expression);
     }
 
-    public void Visit(DeconvolutionExpression expression)
+    public virtual void Visit(DeconvolutionExpression expression)
     {
         if (((CurveExpression)expression.LeftExpression).IsNonDecreasing)
         {
@@ -136,20 +136,20 @@ public class IsNonNegativeVisitor : ICurveExpressionVisitor
         _throughCurveComputation(expression);
     }
 
-    public void Visit(MaxPlusConvolutionExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(MaxPlusConvolutionExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(MaxPlusDeconvolutionExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(MaxPlusDeconvolutionExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(CompositionExpression expression) => _throughCurveComputation(expression);
+    public virtual void Visit(CompositionExpression expression) => _throughCurveComputation(expression);
 
-    public void Visit(DelayByExpression expression) => expression.LeftExpression.Accept(this);
+    public virtual void Visit(DelayByExpression expression) => expression.LeftExpression.Accept(this);
 
-    public void Visit(AnticipateByExpression expression) => expression.LeftExpression.Accept(this);
+    public virtual void Visit(AnticipateByExpression expression) => expression.LeftExpression.Accept(this);
 
-    public void Visit(CurvePlaceholderExpression expression)
+    public virtual void Visit(CurvePlaceholderExpression expression)
         => throw new InvalidOperationException(GetType() + ": Cannot perform the check on a placeholder expression!");
     
-    public void Visit(ScaleExpression expression)
+    public virtual void Visit(ScaleExpression expression)
     {
         if (expression.RightExpression.Compute() > 0) expression.LeftExpression.Accept(this);
         else _throughCurveComputation(expression);
