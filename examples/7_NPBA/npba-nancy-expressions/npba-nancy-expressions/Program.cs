@@ -3,18 +3,6 @@ using CBS;
 using Unipi.Nancy.Expressions.ExpressionsUtility;
 using Unipi.Nancy.Numerics;
 
-bool quiet = false;
-bool debugACs = false;
-
-foreach(var arg in args)
-{
-    if(arg == "--quiet")
-        quiet = true;
-
-    if(arg == "--debug-ACs")
-        debugACs = true;
-}
-
 RunCaseStudy();
 
 void RunCaseStudy()
@@ -36,14 +24,11 @@ void RunCaseStudy()
 
     var isPeriodic = true;
 
-    // Don't know what it actually means, but it makes UA ACs if false, UPP if true.
     var isWorstCase = false; 
 
-    // the second-to-last parameter is linked to the AC period.
-    // making them largely different makes the computations harder
     var flows = new List<Flow>
     {
-        new Flow("Flow0", path1, AvbClass.A, isPeriodic, isWorstCase, 64, new Rational(5), 10),
+        new Flow("Flow0", path1, AvbClass.A, isPeriodic, isWorstCase, 64, new Rational(1, 100), 10),
         new Flow("Flow1", path1, AvbClass.A, isPeriodic, isWorstCase, 64, new Rational(1, 100), 10),
         new Flow("Flow2", path1, AvbClass.A, isPeriodic, isWorstCase, 64, new Rational(1, 100), 10),
         new Flow("Flow3", path1, AvbClass.A, isPeriodic, isWorstCase, 64, new Rational(1, 100), 10),
@@ -66,39 +51,28 @@ void RunCaseStudy()
     };
     cbs.SetFlows(flows);
 
-    if(debugACs)
-    {
-        foreach(var f in flows)
-        {
-            var ac_expr = f.ComputeSourceAc();
-            Console.WriteLine(ac_expr);
-            var ac = f.ComputeSourceAc().Compute();
-            Console.WriteLine($"{ac.IsUltimatelyAffine} {ac.PseudoPeriodLength}");
-        }
-    }
-    
     var endToEndExpression = cbs.Flows[0].ComputeEndToEndDelay();
-    if(!quiet) LatexRenderer.ShowInBrowser(endToEndExpression.ToLatexString(3));
+    Console.WriteLine(endToEndExpression.ToUnicodeString(3));
     var endToEnd = endToEndExpression.Compute();
     var endToEndNano = (endToEnd * 1000000000).Ceil();
-    if(!quiet) Console.WriteLine("End-To-End Delay:\t" + endToEnd + " s");
-    if(!quiet) Console.WriteLine("\t\t\t" + endToEndNano / 1000 + " μs");
+    Console.WriteLine("End-To-End Delay:\t" + endToEnd + " s");
+    Console.WriteLine("\t\t\t" + endToEndNano / 1000 + " μs");
 
     var linkDelayExpression = link4.ComputeDelay(AvbClass.A);
-    //if(!quiet) LatexRenderer.ShowInBrowser(linkDelayExpression.ToLatexString(2));
+    Console.WriteLine(linkDelayExpression.ToUnicodeString(2));
     var linkDelay = linkDelayExpression.Compute();
     var linkDelayNano = (linkDelay * 1000000000).Ceil();
-    if(!quiet) Console.WriteLine("Link Delay Class A:\t" + linkDelay + " s");
-    if(!quiet) Console.WriteLine("\t\t\t" + linkDelayNano / 1000 + " μs");
+    Console.WriteLine("Link Delay Class A:\t" + linkDelay + " s");
+    Console.WriteLine("\t\t\t" + linkDelayNano / 1000 + " μs");
 
 
     var linkBacklogExpression = link4.ComputeBacklog(AvbClass.A);
-    //if(!quiet) LatexRenderer.ShowInBrowser(linkBacklogExpression.ToLatexString(2));
+    Console.WriteLine(linkBacklogExpression.ToUnicodeString(2));
     var linkBacklog = linkBacklogExpression.Compute();
-    if(!quiet) Console.WriteLine("Link Backlog Class A:\t" + linkBacklog + " bit");
-    if(!quiet) Console.WriteLine("\t\t\t" + linkBacklog.Ceil() + " bit");
+    Console.WriteLine("Link Backlog Class A:\t" + linkBacklog + " bit");
+    Console.WriteLine("\t\t\t" + linkBacklog.Ceil() + " bit");
 
     stopwatch.Stop();
-    if(!quiet) Console.WriteLine();
+    Console.WriteLine();
     Console.WriteLine($"Total execution time: {stopwatch.Elapsed}");
 }

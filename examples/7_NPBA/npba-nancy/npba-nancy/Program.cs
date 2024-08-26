@@ -2,18 +2,6 @@
 using CBS;
 using Unipi.Nancy.Numerics;
 
-bool quiet = false;
-bool debugACs = false;
-
-foreach(var arg in args)
-{
-    if(arg == "--quiet")
-        quiet = true;
-
-    if(arg == "--debug-ACs")
-        debugACs = true;
-}
-
 RunCaseStudy();
 
 void RunCaseStudy()
@@ -35,13 +23,10 @@ void RunCaseStudy()
 
     var isPeriodic = true;
 
-    // Don't know what it actually means, but it makes UA ACs if false, UPP if true.
     var isWorstCase = false; 
 
-    // the second-to-last parameter is linked to the AC period.
-    // making them largely different makes the computations harder
     Flow[] flows = [
-        new Flow("Flow0", path1, AvbClass.A, isPeriodic, isWorstCase, 64, new Rational(5), 10),
+        new Flow("Flow0", path1, AvbClass.A, isPeriodic, isWorstCase, 64, new Rational(1, 100), 10),
         new Flow("Flow1", path1, AvbClass.A, isPeriodic, isWorstCase, 64, new Rational(1, 100), 10),
         new Flow("Flow2", path1, AvbClass.A, isPeriodic, isWorstCase, 64, new Rational(1, 100), 10),
         new Flow("Flow3", path1, AvbClass.A, isPeriodic, isWorstCase, 64, new Rational(1, 100), 10),
@@ -64,17 +49,6 @@ void RunCaseStudy()
     ];
     cbs.SetFlows(flows);
 
-    if(debugACs)
-    {
-        foreach(var f in flows)
-        {
-            var ac_expr = f.ComputeSourceAc();
-            Console.WriteLine(ac_expr);
-            var ac = f.ComputeSourceAc();
-            Console.WriteLine($"{ac.IsUltimatelyAffine} {ac.PseudoPeriodLength}");
-        }
-    }
-    
     var endToEnd = cbs.Flows[0].ComputeEndToEndDelay();
     var endToEndNano = (endToEnd * 1000000000).Ceil();
     Console.WriteLine("End-To-End Delay:\t" + endToEnd + " s");
@@ -91,6 +65,6 @@ void RunCaseStudy()
     Console.WriteLine("\t\t\t" + linkBacklog.Ceil() + " bit");
 
     stopwatch.Stop();
-    if(!quiet) Console.WriteLine();
+    Console.WriteLine();
     Console.WriteLine($"Total execution time: {stopwatch.Elapsed}");
 }
