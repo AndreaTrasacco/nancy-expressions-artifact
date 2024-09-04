@@ -32,10 +32,7 @@ public class IsLeftContinuousVisitor : ICurveExpressionVisitor
 
     public virtual void Visit(LowerPseudoInverseExpression expression)
     {
-        if (((CurveExpression)expression.Expression).IsNonDecreasing)
-            IsLeftContinuous = true;
-        else
-            _throughCurveComputation(expression);
+        expression.Expression.Accept(this);
     }
 
     public virtual void Visit(UpperPseudoInverseExpression expression) => _throughCurveComputation(expression);

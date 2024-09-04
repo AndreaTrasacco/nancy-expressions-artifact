@@ -37,10 +37,7 @@ public class IsRightContinuousVisitor : ICurveExpressionVisitor
 
     public virtual void Visit(UpperPseudoInverseExpression expression)
     {
-        if (((CurveExpression)expression.Expression).IsNonDecreasing)
-            IsRightContinuous = true;
-        else
-            _throughCurveComputation(expression);
+        IsRightContinuous = true;
     }
 
     public virtual void Visit(AdditionExpression expression) => _throughCurveComputation(expression);

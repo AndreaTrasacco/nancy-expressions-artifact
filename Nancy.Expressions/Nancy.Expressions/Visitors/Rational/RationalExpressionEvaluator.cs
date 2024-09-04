@@ -26,6 +26,9 @@ public class RationalExpressionEvaluator : IRationalExpressionVisitor
     public virtual void Visit(RationalAdditionExpression expression)
         => _result = expression.Expressions.Aggregate(Rational.Zero, (current, e) => current + e.Value);
 
+    public virtual void Visit(RationalSubtractionExpression expression)
+        => _result = expression.LeftExpression.Value - expression.RightExpression.Value;
+    
     public virtual void Visit(RationalProductExpression expression)
         => _result = expression.Expressions.Aggregate(Rational.One, (current, e) => current * e.Value);
 

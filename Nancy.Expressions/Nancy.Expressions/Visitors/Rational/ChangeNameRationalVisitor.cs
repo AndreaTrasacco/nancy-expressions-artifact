@@ -22,6 +22,9 @@ public class ChangeNameRationalVisitor(string newName) : IRationalExpressionVisi
     public virtual void Visit(RationalAdditionExpression expression)
         => Result = new RationalAdditionExpression(expression.Expressions, newName);
 
+    public virtual void Visit(RationalSubtractionExpression expression)
+        => Result = new RationalSubtractionExpression(expression.LeftExpression, expression.RightExpression, newName);
+    
     public virtual void Visit(RationalProductExpression expression)
         => Result = new RationalProductExpression(expression.Expressions, newName);
 

@@ -15,26 +15,30 @@ public interface IGenericExpression<out T>
     /// The value of the expression
     /// </summary>
     public T Value { get; }
-    
+
     /// <summary>
     /// The name of the expression
     /// </summary>
     public string Name { get; }
 
+    /// <summary>
+    /// Settings for the expression (contains also the settings for the evaluation of the expression)
+    /// </summary>
     public ExpressionSettings? Settings { get; }
-    
+
     /// <summary>
     /// Computes the value the expression evaluates to
     /// </summary>
     public T Compute();
-    
+
     /// <summary>
     /// Formats the expression in LaTeX.
     /// </summary>
-    /// <param name="depth"></param>
-    /// <param name="showRationalsAsName"></param>
+    /// <param name="depth">Level of the expression tree up to which to print the expression fully expanded.</param>
+    /// <param name="showRationalsAsName">If true, shows rational numbers with their expression name
+    /// (<see cref="Name"/>) in place of <see cref="Value"/>.</param>
     public string ToLatexString(
-        int depth = 20, 
+        int depth = 20,
         bool showRationalsAsName = false
     );
 
@@ -87,10 +91,11 @@ public interface IGenericExpression<out T>
     /// <summary>
     /// Returns the representation of the expression using characters of the Unicode character set.
     /// </summary>
-    /// <param name="depth"></param>
-    /// <param name="showRationalsAsName"></param>
+    /// <param name="depth">Level of the expression tree up to which to print the expression fully expanded.</param>
+    /// <param name="showRationalsAsName">If true, shows rational numbers with their expression name
+    /// (<see cref="Name"/>) in place of <see cref="Value"/>.</param>
     public string ToUnicodeString(
-        int depth = 20, 
+        int depth = 20,
         bool showRationalsAsName = false
     );
 
@@ -107,12 +112,45 @@ public interface IGenericExpression<out T>
     /// <returns>The expression (new object) with the new name</returns>
     public IGenericExpression<T> WithName(string expressionName);
 
+    /// <summary>
+    /// Applies an equivalence to the current expression.
+    /// </summary>
+    /// <param name="equivalence">The equivalence to be applied to (a sub-part of) the expression.</param>
+    /// <param name="checkType">Since the equivalence is described by a left-side expression and a right-side
+    /// expression, this parameter identifies the direction of application of the equivalence (match of the left side,
+    /// and substitution with the right side, or vice versa, or both).</param>
+    /// <returns>The new equivalent expression if the equivalence can be applied, the original expression otherwise.
+    /// </returns>
     public IGenericExpression<T> ApplyEquivalence(Equivalence equivalence,
         CheckType checkType = CheckType.CheckLeftOnly);
-    
+
+    /// <summary>
+    /// Applies an equivalence to the current expression, allowing the user to specify the position in the expression in
+    /// which the equivalence should be applied.
+    /// </summary>
+    /// <param name="positionPath">Position of the sub-expression to be replaced with an equivalent one.
+    /// The position is expressed as a path from the root of the expression by using a list of strings "Operand" for
+    /// unary operators, "LeftOperand"/"RightOperand" for binary operators, "Operand(index)" for n-ary operators</param>
+    /// <param name="equivalence">The equivalence to be applied to (a sub-part of) the expression.</param>
+    /// <param name="checkType">Since the equivalence is described by a left-side expression and a right-side
+    /// expression, this parameter identifies the direction of application of the equivalence (match of the left side,
+    /// and substitution with the right side, or vice versa, or both).</param>
+    /// <returns>The new equivalent expression if the equivalence can be applied, the original expression otherwise.
+    /// </returns>
     public IGenericExpression<T> ApplyEquivalenceByPosition(IEnumerable<string> positionPath, Equivalence equivalence,
         CheckType checkType = CheckType.CheckLeftOnly);
 
+    /// <summary>
+    /// Applies an equivalence to the current expression, allowing the user to specify the position in the expression in
+    /// which the equivalence should be applied.
+    /// </summary>
+    /// <param name="expressionPosition">Position of the expression to be replaced</param>
+    /// <param name="equivalence">The equivalence to be applied to (a sub-part of) the expression.</param>
+    /// <param name="checkType">Since the equivalence is described by a left-side expression and a right-side
+    /// expression, this parameter identifies the direction of application of the equivalence (match of the left side,
+    /// and substitution with the right side, or vice versa, or both).</param>
+    /// <returns>The new equivalent expression if the equivalence can be applied, the original expression otherwise.
+    /// </returns>
     public IGenericExpression<T> ApplyEquivalenceByPosition(ExpressionPosition expressionPosition,
         Equivalence equivalence,
         CheckType checkType = CheckType.CheckLeftOnly);

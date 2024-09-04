@@ -164,6 +164,9 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     public virtual void Visit(RationalAdditionExpression expression)
         => VisitNAryInfix(expression, " + ");
 
+    public virtual void Visit(RationalSubtractionExpression expression)
+        => VisitBinaryCommand(expression, " - ");
+    
     public virtual void Visit(RationalProductExpression expression)
         => VisitNAryInfix(expression, " \\cdot ");
 

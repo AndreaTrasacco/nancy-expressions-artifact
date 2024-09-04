@@ -157,6 +157,9 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
 
     public virtual void Visit(RationalAdditionExpression expression)
         => VisitNAryInfix(expression, " + ");
+    
+    public virtual void Visit(RationalSubtractionExpression expression)
+        => VisitBinaryInfix(expression, "-");
 
     public virtual void Visit(RationalProductExpression expression)
         => VisitNAryInfix(expression, " * ");

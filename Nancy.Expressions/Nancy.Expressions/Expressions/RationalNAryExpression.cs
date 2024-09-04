@@ -4,11 +4,18 @@ using Unipi.Nancy.Numerics;
 
 namespace Unipi.Nancy.Expressions;
 
+/// <summary>
+/// Class representing expressions whose value is a <see cref="Rational"/> object and the root is an operation which
+/// accepts n (n >= 2) operands (which are rational expressions) and is commutative and associative.
+/// </summary>
 public abstract class
     RationalNAryExpression : RationalExpression, IGenericNAryExpression<Rational, Rational> // For operators on rationals that are commutative and associative
 {
     public IReadOnlyCollection<IGenericExpression<Rational>> Expressions { get; }
 
+    /// <summary>
+    /// Creates the n-ary operation starting from a collection of expression operands
+    /// </summary>
     public RationalNAryExpression(
         IReadOnlyCollection<IGenericExpression<Rational>> expressions,
         string expressionName = "", ExpressionSettings? settings = null) : base(expressionName, settings)
@@ -16,6 +23,10 @@ public abstract class
         Expressions = expressions;
     }
 
+    /// <summary>
+    /// Creates the n-ary expression starting from a collection of operands of type <see cref="Rational"/> (converted to
+    /// <see cref="RationalNumberExpression"/> objects)
+    /// </summary>
     public RationalNAryExpression(
         IReadOnlyCollection<Rational> rationals,
         IReadOnlyCollection<string> names,
@@ -27,6 +38,9 @@ public abstract class
         Expressions = expressions;
     }
 
+    /// <summary>
+    /// Adds another operand to the expression
+    /// </summary>
     public RationalExpression Append(IGenericExpression<Rational> expression, string expressionName = "", ExpressionSettings? settings = null)
     {
         if (GetType() == expression.GetType())
