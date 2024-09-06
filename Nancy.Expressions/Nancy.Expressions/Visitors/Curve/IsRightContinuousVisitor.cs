@@ -3,8 +3,15 @@ using Unipi.Nancy.MinPlusAlgebra;
 
 namespace Unipi.Nancy.Expressions.Visitors;
 
+/// <summary>
+/// Visitor used to check the right-continuity of the value of a curve expression. Implemented minimizing the amount of
+/// computations.
+/// </summary>
 public class IsRightContinuousVisitor : ICurveExpressionVisitor
 {
+    /// <summary>
+    /// Field used as intermediate and final result of the visitor
+    /// </summary>
     public bool IsRightContinuous;
     
     public virtual void Visit(ConcreteCurveExpression expression)

@@ -8,8 +8,14 @@ namespace Unipi.Nancy.Expressions.Visitors;
 /// </summary>
 public class CurveExpressionEvaluator : ICurveExpressionVisitor
 {
+    /// <summary>
+    /// Field used as intermediate and final result of the visitor
+    /// </summary>
     private Curve _result = Curve.Zero();
 
+    /// <summary>
+    /// Visits the expression and returns tht result
+    /// </summary>
     public Curve GetResult(CurveExpression expression)
     {
         expression.Accept(this);

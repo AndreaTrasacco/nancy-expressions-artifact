@@ -3,6 +3,9 @@ using Unipi.Nancy.Numerics;
 
 namespace Unipi.Nancy.Expressions.Internals;
 
+/// <summary>
+/// Class representing an expression whose root operation is the subtraction between rational numbers
+/// </summary>
 public class RationalSubtractionExpression(
     IGenericExpression<Rational> leftExpression,
     IGenericExpression<Rational> rightExpression,

@@ -5,11 +5,24 @@ using Unipi.Nancy.Expressions.Internals;
 
 namespace Unipi.Nancy.Expressions.Visitors;
 
+/// <summary>
+/// Used for visiting an expression and create its representation using the Unicode character set.
+/// </summary>
+/// <param name="depth">The maximum level of the expression tree (starting from the root) which must be fully expanded
+/// in the representation (after this level, the expression name is used, if not empty)</param>
+/// <param name="showRationalsAsName">If true, rational numbers are not shown using their value, but using their name
+/// </param>
 public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsAsName = true)
     : ICurveExpressionVisitor, IRationalExpressionVisitor
 {
+    /// <summary>
+    /// Textual representation of the expression
+    /// </summary>
     public StringBuilder Result { get; } = new();
 
+    /// <summary>
+    /// Dictionary of greek letters to substitute the expanded letters with their correspondent Unicode symbol
+    /// </summary>
     private static readonly Dictionary<string, string> GreekLetters = new()
     {
         { "alpha", "\u03B1" },
@@ -45,7 +58,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -65,7 +78,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -86,7 +99,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -112,7 +125,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -132,7 +145,10 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         depth++;
     }
 
-    private void FormatByName(string name)
+    /// <summary>
+    /// Formats the name of an expression substituting a greek letter using the correspondent symbol
+    /// </summary>
+    private void FormatName(string name)
     {
         var match = MyRegex().Match(name);
         string nameLetters;
@@ -153,7 +169,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     }
 
     public virtual void Visit(ConcreteCurveExpression expression)
-        => FormatByName(expression.Name);
+        => FormatName(expression.Name);
 
     public virtual void Visit(RationalAdditionExpression expression)
         => VisitNAryInfix(expression, " + ");
@@ -177,7 +193,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (!numberExpression.Name.Equals("") && (showRationalsAsName || depth <= 0))
         {
-            FormatByName(numberExpression.Name);
+            FormatName(numberExpression.Name);
             return;
         }
 
@@ -188,7 +204,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -203,7 +219,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -222,7 +238,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -237,7 +253,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -252,7 +268,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -269,7 +285,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -286,7 +302,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -300,7 +316,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -314,7 +330,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -329,7 +345,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -344,7 +360,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -421,7 +437,7 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -433,7 +449,10 @@ public partial class UnicodeFormatterVisitor(int depth = 20, bool showRationalsA
         Result.Append(')');
         depth++;
     }
-
+    
+    /// <summary>
+    /// Regular expression to detect strings which terminate with digits
+    /// </summary>
     [GeneratedRegex("^(.*?)(\\d+)$")]
     private static partial Regex MyRegex();
 }

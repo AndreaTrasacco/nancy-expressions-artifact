@@ -773,10 +773,6 @@ public abstract class CurveExpression(string expressionName = "", ExpressionSett
     public void Accept(IExpressionVisitor visitor)
         => Accept((ICurveExpressionVisitor)visitor);
 
-    /// <summary>
-    /// Method used for implementing the Visitor design pattern: the visited object must "accept" the visitor object.
-    /// </summary>
-    /// <param name="visitor">The Visitor object</param>
     public abstract void Accept(ICurveExpressionVisitor visitor);
     
     /// <summary>

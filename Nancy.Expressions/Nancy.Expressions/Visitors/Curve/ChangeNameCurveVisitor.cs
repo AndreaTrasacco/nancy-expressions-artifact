@@ -9,6 +9,9 @@ namespace Unipi.Nancy.Expressions.Visitors;
 /// <param name="newName">The new name of the expression</param>
 public class ChangeNameCurveVisitor(string newName) : ICurveExpressionVisitor
 {
+    /// <summary>
+    /// Field used as intermediate and final result of the visitor
+    /// </summary>
     public CurveExpression Result = Expressions.FromCurve(Curve.Zero());
 
     public virtual void Visit(ConcreteCurveExpression expression)

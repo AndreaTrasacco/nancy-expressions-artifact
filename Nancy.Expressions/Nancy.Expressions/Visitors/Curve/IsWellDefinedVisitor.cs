@@ -3,8 +3,15 @@ using Unipi.Nancy.Numerics;
 
 namespace Unipi.Nancy.Expressions.Visitors;
 
+/// <summary>
+/// Visitor used to check the operations of a curve expression are well-defined (according to the definitions in [BT08],
+/// Section 2.1). Implemented minimizing the amount of computations.
+/// </summary>
 public class IsWellDefinedVisitor : ICurveExpressionVisitor
 {
+    /// <summary>
+    /// Field used as intermediate and final result of the visitor
+    /// </summary>
     public bool IsWellDefined;
 
     // A curve is always well-defined

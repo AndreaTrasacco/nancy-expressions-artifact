@@ -3,8 +3,15 @@ using Unipi.Nancy.MinPlusAlgebra;
 
 namespace Unipi.Nancy.Expressions.Visitors;
 
+/// <summary>
+/// Visitor used to check the value of a curve expression is non-negative. Implemented minimizing the amount of
+/// computations.
+/// </summary>
 public class IsNonNegativeVisitor : ICurveExpressionVisitor
 {
+    /// <summary>
+    /// Field used as intermediate and final result of the visitor
+    /// </summary>
     public bool IsNonNegative;
     
     public virtual void Visit(ConcreteCurveExpression expression) => IsNonNegative = expression.Value.IsNonNegative;

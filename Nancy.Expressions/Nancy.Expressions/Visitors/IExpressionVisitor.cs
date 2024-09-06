@@ -9,6 +9,12 @@ namespace Unipi.Nancy.Expressions.Visitors;
 /// </summary>
 public interface IExpressionVisitor
 {
+    /// <summary>
+    /// Visit method of a generic expression
+    /// </summary>
+    /// <typeparam name="T">Type of the value of the expression</typeparam>
+    /// <exception cref="InvalidOperationException">Always raised if the method is executed, it means that a more
+    /// specific Visit method is missing</exception>
     void Visit<T>(IGenericExpression<T> expression)
         => throw new InvalidOperationException("Missing Visit method for type " + expression.GetType());
 }

@@ -3,8 +3,15 @@ using Unipi.Nancy.MinPlusAlgebra;
 
 namespace Unipi.Nancy.Expressions.Visitors;
 
+/// <summary>
+/// Visitor used to check the convexity of the value of a curve expression. Implemented minimizing the amount of
+/// computations.
+/// </summary>
 public class IsConvexVisitor : ICurveExpressionVisitor
 {
+    /// <summary>
+    /// Field used as intermediate and final result of the visitor
+    /// </summary>
     public bool IsConvex;
 
     public virtual void Visit(ConcreteCurveExpression expression) => IsConvex = expression.Value.IsConvex;

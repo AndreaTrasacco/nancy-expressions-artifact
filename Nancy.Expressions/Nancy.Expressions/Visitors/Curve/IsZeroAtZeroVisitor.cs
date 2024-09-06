@@ -5,8 +5,15 @@ using Unipi.Nancy.Numerics;
 
 namespace Unipi.Nancy.Expressions.Visitors;
 
+/// <summary>
+/// Visitor used to check the concavity of the value of a curve expression. Implemented minimizing the amount of
+/// computations.
+/// </summary>
 public class IsZeroAtZeroVisitor : ICurveExpressionVisitor
 {
+    /// <summary>
+    /// Field used as intermediate and final result of the visitor
+    /// </summary>
     public bool IsZeroAtZero;
 
     public virtual void Visit(ConcreteCurveExpression expression) =>
@@ -14,16 +21,12 @@ public class IsZeroAtZeroVisitor : ICurveExpressionVisitor
 
     private void _throughCurveComputation(IGenericExpression<Curve> expression) =>
         IsZeroAtZero = expression.Compute().IsZeroAtZero();
-    
+
     public virtual void Visit(NegateExpression expression)
-    {
-        expression.Expression.Accept(this);
-    }
+        => expression.Expression.Accept(this);
 
     public virtual void Visit(ToNonNegativeExpression expression)
-    {
-        IsZeroAtZero = expression.Expression.Compute().ValueAt(Rational.Zero) <= Rational.Zero;
-    }
+        => IsZeroAtZero = expression.Expression.Compute().ValueAt(Rational.Zero) <= Rational.Zero;
 
     public virtual void Visit(SubAdditiveClosureExpression expression)
     {
@@ -40,7 +43,7 @@ public class IsZeroAtZeroVisitor : ICurveExpressionVisitor
     public virtual void Visit(ToUpperNonDecreasingExpression expression) => _throughCurveComputation(expression);
 
     public virtual void Visit(ToLowerNonDecreasingExpression expression) => _throughCurveComputation(expression);
-    
+
     public virtual void Visit(ToLeftContinuousExpression expression) => _throughCurveComputation(expression);
 
     public virtual void Visit(ToRightContinuousExpression expression) => _throughCurveComputation(expression);
@@ -59,7 +62,8 @@ public class IsZeroAtZeroVisitor : ICurveExpressionVisitor
             if (!IsZeroAtZero)
                 break;
         }
-        if(!IsZeroAtZero) _throughCurveComputation(expression);
+
+        if (!IsZeroAtZero) _throughCurveComputation(expression);
     }
 
     public virtual void Visit(SubtractionExpression expression)
@@ -69,7 +73,7 @@ public class IsZeroAtZeroVisitor : ICurveExpressionVisitor
         {
             expression.RightExpression.Accept(this);
         }
-        
+
         if (!IsZeroAtZero) _throughCurveComputation(expression);
     }
 
@@ -81,7 +85,8 @@ public class IsZeroAtZeroVisitor : ICurveExpressionVisitor
             if (!IsZeroAtZero)
                 break;
         }
-        if(!IsZeroAtZero) _throughCurveComputation(expression);
+
+        if (!IsZeroAtZero) _throughCurveComputation(expression);
     }
 
     public virtual void Visit(MaximumExpression expression)
@@ -92,7 +97,8 @@ public class IsZeroAtZeroVisitor : ICurveExpressionVisitor
             if (!IsZeroAtZero)
                 break;
         }
-        if(!IsZeroAtZero) _throughCurveComputation(expression);
+
+        if (!IsZeroAtZero) _throughCurveComputation(expression);
     }
 
     public virtual void Visit(ConvolutionExpression expression) => _throughCurveComputation(expression);

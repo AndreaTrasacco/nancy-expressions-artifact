@@ -2,6 +2,9 @@
 
 namespace Unipi.Nancy.Expressions.Internals;
 
+/// <summary>
+/// Class describing a placeholder for any rational expression (used for equivalences)
+/// </summary>
 public class RationalPlaceholderExpression(
     string rationalName,
     ExpressionSettings? settings = null) : RationalExpression(rationalName, settings)

@@ -9,8 +9,14 @@ namespace Unipi.Nancy.Expressions.Visitors;
 /// </summary>
 public class RationalExpressionEvaluator : IRationalExpressionVisitor
 {
+    /// <summary>
+    /// Field used as intermediate and final result of the visitor
+    /// </summary>
     private Rational _result = Rational.Zero;
 
+    /// <summary>
+    /// Visits the expression and returns tht result
+    /// </summary>
     public Rational GetResult(RationalExpression expression)
     {
         expression.Accept(this);

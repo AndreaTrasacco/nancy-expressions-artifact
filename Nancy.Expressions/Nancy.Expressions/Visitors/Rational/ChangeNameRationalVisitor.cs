@@ -9,6 +9,9 @@ namespace Unipi.Nancy.Expressions.Visitors;
 /// <param name="newName">The new name of the expression</param>
 public class ChangeNameRationalVisitor(string newName) : IRationalExpressionVisitor
 {
+    /// <summary>
+    /// Field used as intermediate and final result of the visitor
+    /// </summary>
     public RationalExpression Result = Expressions.FromRational(Rational.Zero);
 
     public virtual void Visit(HorizontalDeviationExpression expression)

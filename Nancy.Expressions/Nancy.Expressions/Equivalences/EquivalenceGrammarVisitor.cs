@@ -6,6 +6,10 @@
 /// </summary>
 public class EquivalenceGrammarVisitor : NetCalGBaseVisitor<object>
 {
+    /// <summary>
+    /// Private field containing the list of placeholder strings found in the equivalence (to check if the same
+    /// placeholders are found on both the left side and the right side of the equivalence)
+    /// </summary>
     private readonly List<string> _placeholders = [];
 
     public override object VisitEquivalence(NetCalGParser.EquivalenceContext context)

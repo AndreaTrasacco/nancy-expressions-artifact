@@ -5,10 +5,24 @@ using Unipi.Nancy.Expressions.Internals;
 
 namespace Unipi.Nancy.Expressions.Visitors;
 
+/// <summary>
+/// Used for visiting an expression and create its representation using Latex code.
+/// </summary>
+/// <param name="depth">The maximum level of the expression tree (starting from the root) which must be fully expanded
+/// in the representation (after this level, the expression name is used, if not empty)</param>
+/// <param name="showRationalsAsName">If true, rational numbers are not shown using their value, but using their name
+/// </param>
 public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsName = true)
     : ICurveExpressionVisitor, IRationalExpressionVisitor
 {
+    /// <summary>
+    /// Latex code for the textual representation of the expression
+    /// </summary>
     public StringBuilder Result { get; } = new();
+    
+    /// <summary>
+    /// List of greek letters to substitute the expanded letters with their correspondent Latex symbol
+    /// </summary>
     private static readonly List<string> GreekLetters =
     [
         "alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota", "kappa", "lambda", "mu", "nu",
@@ -24,7 +38,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -44,7 +58,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -65,7 +79,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -86,7 +100,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -112,7 +126,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -132,7 +146,11 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
         depth++;
     }
 
-    protected void FormatByName(string name)
+    /// <summary>
+    /// Formats the name of an expression putting as subscript the ending digits and substituting a greek letter using
+    /// the correspondent Latex command
+    /// </summary>
+    protected void FormatName(string name)
     {
         var match = MyRegex().Match(name);
         string nameLetters;
@@ -158,7 +176,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
 
     public virtual void Visit(ConcreteCurveExpression expression)
     {
-        FormatByName(expression.Name);
+        FormatName(expression.Name);
     }
 
     public virtual void Visit(RationalAdditionExpression expression)
@@ -183,7 +201,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (!numberExpression.Name.Equals("") && (showRationalsAsName || depth <= 0))
         {
-            FormatByName(numberExpression.Name);
+            FormatName(numberExpression.Name);
             return;
         }
         
@@ -197,7 +215,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -211,7 +229,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -240,7 +258,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -255,7 +273,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -270,7 +288,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -296,7 +314,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -322,7 +340,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -336,7 +354,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -350,7 +368,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -365,7 +383,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -379,7 +397,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -426,7 +444,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -440,7 +458,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -471,7 +489,7 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
     {
         if (depth <= 0 && !expression.Name.Equals(""))
         {
-            FormatByName(expression.Name);
+            FormatName(expression.Name);
             return;
         }
 
@@ -484,6 +502,9 @@ public partial class LatexFormatterVisitor(int depth = 20, bool showRationalsAsN
         depth++;
     }
 
+    /// <summary>
+    /// Regular expression to detect strings which terminate with digits
+    /// </summary>
     [GeneratedRegex("^(.*?)(\\d+)$")]
     private static partial Regex MyRegex();
 }

@@ -3,8 +3,15 @@ using Unipi.Nancy.MinPlusAlgebra;
 
 namespace Unipi.Nancy.Expressions.Visitors;
 
+/// <summary>
+/// Visitor used to check the value of a curve expression is non-decreasing. Implemented minimizing the amount of
+/// computations.
+/// </summary>
 public class IsNonDecreasingVisitor : ICurveExpressionVisitor
 {
+    /// <summary>
+    /// Field used as intermediate and final result of the visitor
+    /// </summary>
     public bool IsNonDecreasing;
 
     public virtual void Visit(ConcreteCurveExpression expression) => IsNonDecreasing = expression.Value.IsNonDecreasing;
