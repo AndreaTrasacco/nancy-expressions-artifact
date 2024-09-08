@@ -14,10 +14,26 @@ namespace Unipi.Nancy.Expressions.Equivalences;
 /// </summary>
 public class Equivalence
 {
+    /// <summary>
+    /// Dictionary of placeholders found in the equivalence, along with the correspondent curve expression found inside
+    /// the expression under analysis (for the application of the equivalence)
+    /// </summary>
     private Dictionary<string, CurveExpression> _curvePlaceholders = new();
+    
+    /// <summary>
+    /// Dictionary of placeholders found in the equivalence, along with the correspondent rational expression found
+    /// inside the expression under analysis (for the application of the equivalence)
+    /// </summary>
     private Dictionary<string, RationalExpression> _rationalPlaceholders = new();
 
+    /// <summary>
+    /// Left side of the equivalence
+    /// </summary>
     public CurveExpression LeftSideExpression { get; }
+    
+    /// <summary>
+    /// Right side of the equivalence
+    /// </summary>
     public CurveExpression RightSideExpression { get; }
 
     private readonly Dictionary<string, IEnumerable<Predicate<CurveExpression>>> _hypothesis = new();

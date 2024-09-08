@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nancy.Expressions", "Nancy.Expressions", "{343B6DC0-2CF5-4BC6-977C-6F508CD153B4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nancy.Expressions", "Nancy.Expressions\Nancy.Expressions\Nancy.Expressions.csproj", "{D9764947-D844-4BAB-A1D6-E69112071515}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nancy.Expressions.Interactive", "Nancy.Expressions\Nancy.Expressions.Interactive\Nancy.Expressions.Interactive.csproj", "{24A0F158-FF50-4421-B834-414964FDC9DB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nancy.Expressions.Tests", "Nancy.Expressions\Nancy.Expressions.Tests\Nancy.Expressions.Tests.csproj", "{8100D66F-C4F7-46AD-A1BE-638DC3EC1643}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{145D6600-F7C9-4F0F-9BCE-B7998A45E780}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7 NPBA", "7 NPBA", "{9FE1D1A2-4ED3-4766-B15B-EABA451FC2B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "npba-nancy", "npba-nancy", "{BB805659-9B39-4CB0-880D-B98BF7D717FA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "npba-nancy", "examples\7 NPBA\npba-nancy\npba-nancy\npba-nancy.csproj", "{A265D249-7436-4784-B028-886E885333CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "npba-nancy-expressions", "npba-nancy-expressions", "{96A15A2C-3F1A-448F-85E6-1E523A1AC10E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "npba-nancy-expressions", "examples\7 NPBA\npba-nancy-expressions\npba-nancy-expressions\npba-nancy-expressions.csproj", "{3D2CA021-1FC4-4987-B697-09994F111530}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8 Benchmark Flow Controlled Networks", "8 Benchmark Flow Controlled Networks", "{070D0076-E7DD-4AC0-830F-9D14B675FEA2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NancyExpressionsBenchmarks", "NancyExpressionsBenchmarks", "{15FF7F71-4180-4B38-B88E-37C8323E6191}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NancyExpressionsBenchmarks", "examples\8 Benchmark Flow Controlled Networks\NancyExpressionsBenchmarks\NancyExpressionsBenchmarks\NancyExpressionsBenchmarks.csproj", "{FF65309C-5947-4F55-B386-AF4721BA8005}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9764947-D844-4BAB-A1D6-E69112071515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9764947-D844-4BAB-A1D6-E69112071515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9764947-D844-4BAB-A1D6-E69112071515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9764947-D844-4BAB-A1D6-E69112071515}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24A0F158-FF50-4421-B834-414964FDC9DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24A0F158-FF50-4421-B834-414964FDC9DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24A0F158-FF50-4421-B834-414964FDC9DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24A0F158-FF50-4421-B834-414964FDC9DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8100D66F-C4F7-46AD-A1BE-638DC3EC1643}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8100D66F-C4F7-46AD-A1BE-638DC3EC1643}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8100D66F-C4F7-46AD-A1BE-638DC3EC1643}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8100D66F-C4F7-46AD-A1BE-638DC3EC1643}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A265D249-7436-4784-B028-886E885333CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A265D249-7436-4784-B028-886E885333CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A265D249-7436-4784-B028-886E885333CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A265D249-7436-4784-B028-886E885333CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D2CA021-1FC4-4987-B697-09994F111530}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D2CA021-1FC4-4987-B697-09994F111530}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D2CA021-1FC4-4987-B697-09994F111530}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D2CA021-1FC4-4987-B697-09994F111530}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF65309C-5947-4F55-B386-AF4721BA8005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF65309C-5947-4F55-B386-AF4721BA8005}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF65309C-5947-4F55-B386-AF4721BA8005}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF65309C-5947-4F55-B386-AF4721BA8005}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D9764947-D844-4BAB-A1D6-E69112071515} = {343B6DC0-2CF5-4BC6-977C-6F508CD153B4}
+		{24A0F158-FF50-4421-B834-414964FDC9DB} = {343B6DC0-2CF5-4BC6-977C-6F508CD153B4}
+		{8100D66F-C4F7-46AD-A1BE-638DC3EC1643} = {343B6DC0-2CF5-4BC6-977C-6F508CD153B4}
+		{9FE1D1A2-4ED3-4766-B15B-EABA451FC2B5} = {145D6600-F7C9-4F0F-9BCE-B7998A45E780}
+		{BB805659-9B39-4CB0-880D-B98BF7D717FA} = {9FE1D1A2-4ED3-4766-B15B-EABA451FC2B5}
+		{A265D249-7436-4784-B028-886E885333CD} = {BB805659-9B39-4CB0-880D-B98BF7D717FA}
+		{96A15A2C-3F1A-448F-85E6-1E523A1AC10E} = {9FE1D1A2-4ED3-4766-B15B-EABA451FC2B5}
+		{3D2CA021-1FC4-4987-B697-09994F111530} = {96A15A2C-3F1A-448F-85E6-1E523A1AC10E}
+		{070D0076-E7DD-4AC0-830F-9D14B675FEA2} = {145D6600-F7C9-4F0F-9BCE-B7998A45E780}
+		{15FF7F71-4180-4B38-B88E-37C8323E6191} = {070D0076-E7DD-4AC0-830F-9D14B675FEA2}
+		{FF65309C-5947-4F55-B386-AF4721BA8005} = {15FF7F71-4180-4B38-B88E-37C8323E6191}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6E740300-23C9-4435-8DA2-6F0D56144D20}
+	EndGlobalSection
+EndGlobal

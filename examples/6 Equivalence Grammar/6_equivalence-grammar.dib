@@ -71,7 +71,7 @@ display(expression.ApplyEquivalence(equivalence));
 #!markdown
 
 Example of use of the textual declaration of equivalences. Two equivalences are defined, following the syntax specified in _Nancy.Expressions_, inside the file _my-equivalences.eq_.
-The following snippet of code reads the two equivalences e creates the corresponding `Equivalence` objects, then they are applied to some expressions.
+The following snippet of code reads the two equivalences and creates the corresponding `Equivalence` objects, then they are applied to some expressions.
 
 #!csharp
 

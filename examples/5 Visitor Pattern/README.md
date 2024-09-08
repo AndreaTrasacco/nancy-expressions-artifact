@@ -1,47 +1,13 @@
-#!meta
-
-{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
-
-#!markdown
+# Visitor Pattern
 
 This notebook shows an example about visitor classes (following the _Visitor_ design pattern) to extend the functionalities of _Nancy.Expressions_.
 In the example, we don't define a visitor class from scratch but we extend the visitor which formats the expressions in Latex syntax.
 After the extension of the visitor, we show how to use it.
 
-#!pwsh
-
-# Compile the Nancy.Expression library
-# Warning: if you modified the source, restart the notebook kernel before re-compiling! Use ctrl+shift+P to find this command in VS Code
-dotnet publish -c Release ../../Nancy.Expressions/Nancy.Expressions.sln -f net8.0
-
-#!csharp
-
-// Load libraries and other dependencies 
-#r "nuget: Unipi.Nancy.Interactive"
-#r "../../Nancy.Expressions/Nancy.Expressions/bin/Release/net8.0/Unipi.Nancy.Expressions.dll"
-#r "../../Nancy.Expressions/Nancy.Expressions.Interactive/bin/Release/net8.0/Unipi.Nancy.Expressions.Interactive.dll"
-
-// Nancy
-using Unipi.Nancy.Numerics;
-using Unipi.Nancy.MinPlusAlgebra;
-using Unipi.Nancy.NetworkCalculus;
-using Unipi.Nancy.Interactive;
-
-// Nancy.Expressions
-using Unipi.Nancy.Expressions;
-using Unipi.Nancy.Expressions.Visitors;
-
-Unipi.Nancy.Expressions.Interactive.NancyExpressionKernelExtension.Load(Microsoft.DotNet.Interactive.KernelInvocationContext.Current.HandlingKernel.RootKernel);
-
-#!markdown
-
 The following code cell defines the new (trivial) visitor class in which we override only the `Visit` method of the convolution expression.
 The extended behavior is simply the following: if all the operands of the convolution have the same $name$, then the convolution is shown as $\bigotimes_{i = 1 \dots n}{name_i}$ using an index $i$.
 
-#!csharp
-
-using Unipi.Nancy.Expressions.Internals;
-
+```
 public class LatexFormatterExtended : LatexFormatterVisitor
 {
     public override void Visit(ConvolutionExpression expression)
@@ -63,26 +29,19 @@ public class LatexFormatterExtended : LatexFormatterVisitor
         }
     }
 }
+```
 
-#!markdown
+In the following code cell, it is shown how to use the new visitor:
 
-In the following code cell, it is shown how to use the new visitor.
-
-#!csharp
-
-using Unipi.Nancy.Expressions.ExpressionsUtility;
-using Microsoft.DotNet.Interactive.Formatting;
-
+```
 var latexFormatter = new LatexFormatterExtended();
-var alpha = new SigmaRhoArrivalCurve(10,1);
-var beta1 = new RateLatencyServiceCurve(1,2);
-var beta2 = new RateLatencyServiceCurve(2,4);
-var beta3 = new RateLatencyServiceCurve(3,6);
-var beta4 = new RateLatencyServiceCurve(4,8);
+<initialization of curves>
 var conv = Expressions.Convolution([beta1, beta2, beta3, beta4], ["beta", "beta", "beta", "beta"]);
 var hdev = Expressions.HorizontalDeviation(alpha, conv);
 
 hdev.Accept(latexFormatter);
-Console.WriteLine(latexFormatter.Result);
 LatexRenderer.ToHtml(latexFormatter.Result.ToString())
              .DisplayAs(HtmlFormatter.MimeType);
+```
+
+Output: $hdev\left(\alpha, \left(\bigotimes_{i = 1 \dots 4}{\beta_i}\right)\right)$.

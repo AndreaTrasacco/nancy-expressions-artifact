@@ -10,14 +10,14 @@ This notebook contains examples highlighting the flexibility of the visualizatio
 
 # Compile the Nancy.Expression library
 # Warning: if you modified the source, restart the notebook kernel before re-compiling! Use ctrl+shift+P to find this command in VS Code
-dotnet publish -c Release ../Nancy.Expressions/Nancy.Expressions.sln -f net8.0
+dotnet publish -c Release ../../Nancy.Expressions/Nancy.Expressions.sln -f net8.0
 
 #!csharp
 
 // Load libraries and other dependencies 
 #r "nuget: Unipi.Nancy.Interactive"
-#r "../Nancy.Expressions/Nancy.Expressions/bin/Release/net8.0/Unipi.Nancy.Expressions.dll"
-#r "../Nancy.Expressions/Nancy.Expressions.Interactive/bin/Release/net8.0/Unipi.Nancy.Expressions.Interactive.dll"
+#r "../../Nancy.Expressions/Nancy.Expressions/bin/Release/net8.0/Unipi.Nancy.Expressions.dll"
+#r "../../Nancy.Expressions/Nancy.Expressions.Interactive/bin/Release/net8.0/Unipi.Nancy.Expressions.Interactive.dll"
 
 // Nancy
 using Unipi.Nancy.Numerics;

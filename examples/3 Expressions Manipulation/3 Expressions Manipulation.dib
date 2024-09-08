@@ -6,21 +6,21 @@
 
 This notebook contains examples about the flexible manipulation of expressions provided by *Nancy.Expressions*. 
 In particular, the library allows to apply equivalences to (sub-parts of) expressions that may reduce their computational complexity.
-Equivalences can be either user-defined ones or well-known ones (already reported in literature and implemented in the library)
+Equivalences can be either user-defined ones or well-known ones (already reported in literature and implemented in the library).
 Furthermore, the user can also replace parts of expressions by specifying which sub-expression needs to be substituted (replace _by-value_) or using its position (replace _by-position_).
 
 #!pwsh
 
 # Compile the Nancy.Expression library
 # Warning: if you modified the source, restart the notebook kernel before re-compiling! Use ctrl+shift+P to find this command in VS Code
-dotnet publish -c Release ../Nancy.Expressions/Nancy.Expressions.sln -f net8.0
+dotnet publish -c Release ../../Nancy.Expressions/Nancy.Expressions.sln -f net8.0
 
 #!csharp
 
 // Load libraries and other dependencies 
 #r "nuget: Unipi.Nancy.Interactive"
-#r "../Nancy.Expressions/Nancy.Expressions/bin/Release/net8.0/Unipi.Nancy.Expressions.dll"
-#r "../Nancy.Expressions/Nancy.Expressions.Interactive/bin/Release/net8.0/Unipi.Nancy.Expressions.Interactive.dll"
+#r "../../Nancy.Expressions/Nancy.Expressions/bin/Release/net8.0/Unipi.Nancy.Expressions.dll"
+#r "../../Nancy.Expressions/Nancy.Expressions.Interactive/bin/Release/net8.0/Unipi.Nancy.Expressions.Interactive.dll"
 
 // Nancy
 using Unipi.Nancy.Numerics;
@@ -129,7 +129,10 @@ Other example of replacement _by-position_: replace the right operand of the dec
 
 #!csharp
 
-var new_deconv3 = deconv.ReplaceByPosition(deconv.RootPosition().RightOperand(), Expressions.FromCurve(h));
+var new_deconv3 = deconv.ReplaceByPosition(
+                            deconv.RootPosition().RightOperand(), 
+                            Expressions.FromCurve(h)
+                        );
 
 display(deconv);
 display(new_deconv3);

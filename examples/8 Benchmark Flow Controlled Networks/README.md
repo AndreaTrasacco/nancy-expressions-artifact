@@ -1,6 +1,6 @@
 # Flow-controlled networks - Benchmark
 This directory contains a project which implements three benchmarks for comparing the performance of _Nancy_ and _Nancy.Expressions_ in evaluating an expression.
-The expression used for the test is the number 12 in the paper "Computationally Efficient Worst-Case Analysis of Flow-Controlled Networks With Network Calculus" (https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10042451.
+The expression used for the test is the number 12 in the paper "Computationally Efficient Worst-Case Analysis of Flow-Controlled Networks With Network Calculus" (https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10042451).
 We compared the performance, in terms of execution time and memory allocation, in the three following cases:
 1) Evaluation of the expression using _Nancy_.
 2) Evaluation of the expression using _Nancy.Expressions_ without making any simplification.
