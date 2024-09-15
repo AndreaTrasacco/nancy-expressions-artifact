@@ -44,5 +44,5 @@ Each method of the *Nancy* library, such as `f.SubAdditiveClosure()`, `Curve.Con
 
 ### *Nancy.Expressions*
 
-The methods `f.SubAdditiveClosure()`, `Expressions.Convolution(f_sac, g)` or `Expressions.Deconvolution(conv, f_sac)`, don't make any computation to allow the construction and successive analysis of the expression and possible simplification. The actual computation of the expression is performed calling the `Compute()` method and exploiting the API of the *Nancy* library.
+The methods of the *Nancy.Expressions* library, such as `f.SubAdditiveClosure()`, `Expressions.Convolution(f_sac, g)` or `Expressions.Deconvolution(conv, f_sac)`, don't make any computation: this allows the construction and successive analysis of the expression and possible simplification. The actual computation of the expression is performed calling the `Compute()` method and exploiting the API of the *Nancy* library.
 

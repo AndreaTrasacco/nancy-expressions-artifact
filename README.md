@@ -1,13 +1,13 @@
 # Nancy.Expressions
 ## _Towards a Computer Algebra System for Deterministic Network Calculus_
 
-Nancy.Expressions is a C# library which provides the possibility of working on arbitrarily complex DNC symbolic expressions. 
+*Nancy.Expressions* is a C# library which provides the possibility of working on arbitrarily complex DNC symbolic expressions. 
 It allows to effectively build expressions, flexibly visualizing them and evaluating them. 
 The library is able to analyze an expression and apply equivalences to sub-parts of it before making any computation, possibly reducing its complexity.
 
 ## Language and requirements
 
-Nancy.Expressions is a .NET 8.0 library, written in C# 12.
+*Nancy.Expressions* is a .NET 8.0 library, written in C# 12.
 Both SDK and runtime for .NET are cross-platform, and can be downloaded from [here](https://dotnet.microsoft.com/en-us/download).
 
 ### DNC Equivalence Grammar - Antlr 4

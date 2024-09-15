@@ -27,7 +27,21 @@ Use of the equivalence:
 
 ## Textual way
 
-Two equivalences are defined, following the syntax specified in *Nancy.Expressions*, inside the file *my-equivalences.eq*.
+Two equivalences are defined, following the syntax specified in *Nancy.Expressions*, inside the file *my-equivalences.eq*:
+
+```
+{
+    f in U subadditive; 
+    g in U zero-at-zero; 
+    f <= g; 
+    f * g well-defined; 
+} ==> f * g = f
+{
+    f in U concave zero-at-zero;
+    g in U concave zero-at-zero;
+} ==> f * g = f /\ g
+```
+
 The snippet of code in the following screenshot reads the two equivalences and creates the corresponding `Equivalence` objects, then they are applied to some expressions.
 
 ![Equivalence definition - Textual way](./img/equivalence-grammar.png)

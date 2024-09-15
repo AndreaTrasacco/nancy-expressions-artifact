@@ -41,6 +41,6 @@ Substitute the deconvolution with a convolution, and re-apply the previous equiv
 
 ![Replace by-position notebook cell and output](./img/replace-by-position.png)
 
-Other example: replace the right operand of the deconvolution with $h$ from the initial expression.
+Other example: replace the right operand of the deconvolution with $h$ from the initial expression. The right operand is specified as first argument of the method `ReplaceByPosition` writing `deconv.RootPosition().RightOperand()` (whose correctness is checked only at runtime, therefore the user should take care of its consistency during development).
 
 ![Replace by-position (with expression position) notebook cell and output](./img/replace-by-position_2.png)
