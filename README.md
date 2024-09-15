@@ -5,6 +5,12 @@
 It allows to effectively build expressions, flexibly visualizing them and evaluating them. 
 The library is able to analyze an expression and apply equivalences to sub-parts of it before making any computation, possibly reducing its complexity.
 
+This is the artifact repository for the paper _Nancy.Expressions: Towards a Computer Algebra System for Deterministic Network Calculus_.
+In [Nancy.Expressions](/Nancy.Expressions) you can the source code for the first public release of the library.
+In [examples](/examples), you can find the examples and use cases discussed in the paper, shown with more detail and in runnable form (using [Polyglot Notebooks](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.dotnet-interactive-vscode)).
+
+The library is maintained in the [Nancy repository](https://github.com/rzippo/nancy), and its documentation can be found [here](nancy.unipi.it).
+
 ## Language and requirements
 
 *Nancy.Expressions* is a .NET 8.0 library, written in C# 12.
