@@ -12,4 +12,6 @@ To run these notebooks you will need to install:
  * Visual Studio Code ([here](https://code.visualstudio.com/)) 
  * *Polyglot Notebooks* extension ([here](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.dotnet-interactive-vscode))
 
+> Make sure to install the *Polyglot Notebooks* version `v1.0.5229040`, as the later versions are (at the time of writing) not working with the examples provided here. 
+
 Then you can open a notebook (a `.dib` file) from VS Code.

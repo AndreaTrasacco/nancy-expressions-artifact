@@ -18,7 +18,7 @@ dotnet publish -c Release ../../Nancy.Expressions/Nancy.Expressions.sln -f net8.
 #!csharp
 
 // Load libraries and other dependencies 
-#r "nuget: Unipi.Nancy.Interactive"
+#r "nuget: Unipi.Nancy.Interactive, 1.0.2"
 #r "../../Nancy.Expressions/Nancy.Expressions/bin/Release/net8.0/Unipi.Nancy.Expressions.dll"
 #r "../../Nancy.Expressions/Nancy.Expressions.Interactive/bin/Release/net8.0/Unipi.Nancy.Expressions.Interactive.dll"
 
